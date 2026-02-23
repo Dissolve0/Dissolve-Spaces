@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HeartmindSpaces — Invoice (Restaurant at the End of the Universe)</title>
+<title>HeartmindSpaces — Invoice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
 <style>
+  /* ─── RESET ──────────────────────────────── */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
@@ -42,13 +43,16 @@
 
   /* ─── DEEP SPACE ─────────────────────────── */
   .space {
-    position: fixed; inset: 0; z-index: 0;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
     background: radial-gradient(ellipse 160% 100% at 50% 30%, #030818 0%, #000004 70%);
   }
 
   .space::before {
     content: '';
-    position: absolute; inset: -80%;
+    position: absolute;
+    inset: -80%;
     background-image:
       radial-gradient(1px 1px at 12% 20%, rgba(100,180,255,0.8), transparent),
       radial-gradient(1.2px 1.2px at 28% 65%, rgba(255,255,255,0.5), transparent),
@@ -66,7 +70,8 @@
 
   .space::after {
     content: '';
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     background:
       radial-gradient(ellipse 400px 350px at 20% 25%, rgba(0,40,120,0.1), transparent),
       radial-gradient(ellipse 350px 500px at 80% 70%, rgba(0,20,80,0.07), transparent);
@@ -74,123 +79,147 @@
 
   @keyframes star-drift { to { transform: translate(250px, 125px); } }
 
-  /* ═══ GUIDE INTRO ════════════════════════════ */
-  .guide-intro {
-    position: fixed; inset: 0; z-index: 200;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    cursor: pointer; transition: opacity 0.8s ease;
+  /* ═══════════════════════════════════════════
+     PROTON INTRO
+     ═══════════════════════════════════════════ */
+  .proton-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.8s ease;
   }
 
-  .guide-intro.gone { opacity: 0; pointer-events: none; }
+  .proton-intro.gone { opacity: 0; pointer-events: none; }
 
-  .guide-device {
-    position: relative; width: 220px; height: 300px;
-    border-radius: 14px; overflow: hidden;
-    background: linear-gradient(145deg, #0a3d2a 0%, #0d4f35 30%, #0a3d2a 70%, #072e1f 100%);
-    border: 2px solid rgba(0,229,255,0.12);
+  .proton-assembly {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 800px;
+    transform-style: preserve-3d;
+  }
+
+  /* ─── NUCLEUS ─────────────────────────────── */
+  .proton-core {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 36%,
+      #ffffff 0%, #c8f8ff 12%, #00e5ff 35%,
+      rgba(0,229,255,0.4) 60%, transparent 100%
+    );
     box-shadow:
-      0 0 30px rgba(0,229,255,0.15),
-      0 0 60px rgba(0,229,255,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.06),
-      inset 0 0 40px rgba(0,20,10,0.4);
-    animation: guide-float 6s ease-in-out infinite;
-    transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease;
+      0 0 20px rgba(0,229,255,0.9),
+      0 0 45px rgba(0,229,255,0.55),
+      0 0 80px rgba(0,229,255,0.3),
+      inset 0 0 12px rgba(255,255,255,0.35);
+    z-index: 10;
+    animation: nucleus-breathe 3s ease-in-out infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.2s ease, opacity 0.4s ease;
   }
 
-  @keyframes guide-float {
-    0%, 100% { transform: translateY(0) rotateX(2deg); }
-    50% { transform: translateY(-8px) rotateX(-1deg); }
+  @keyframes nucleus-breathe {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0,229,255,0.9), 0 0 45px rgba(0,229,255,0.55), 0 0 80px rgba(0,229,255,0.3); }
+    50% { transform: scale(1.08); box-shadow: 0 0 28px rgba(0,229,255,1), 0 0 55px rgba(0,229,255,0.65), 0 0 100px rgba(0,229,255,0.35); }
   }
 
-  .guide-spine {
-    position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
-    background: linear-gradient(180deg, rgba(0,229,255,0.08) 0%, rgba(0,229,255,0.03) 50%, rgba(0,229,255,0.08) 100%);
-    border-right: 1px solid rgba(0,229,255,0.06);
+  /* ─── QUARKS ──────────────────────────────── */
+  .quark {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    z-index: 11;
+    top: 50%; left: 50%;
   }
 
-  .guide-cover {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 24px 20px;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    z-index: 2;
+  .quark-r {
+    background: radial-gradient(circle, #ff6080 40%, transparent 100%);
+    box-shadow: 0 0 5px #ff4060;
+    animation: qp1 2.2s ease-in-out infinite;
   }
 
-  .guide-cover.flipped {
-    opacity: 0; transform: rotateY(12deg) scale(0.95);
+  .quark-g {
+    background: radial-gradient(circle, #60ff90 40%, transparent 100%);
+    box-shadow: 0 0 5px #40ff70;
+    animation: qp2 2.8s ease-in-out infinite;
+  }
+
+  .quark-b {
+    background: radial-gradient(circle, #6090ff 40%, transparent 100%);
+    box-shadow: 0 0 5px #4070ff;
+    animation: qp3 3.2s ease-in-out infinite;
+  }
+
+  @keyframes qp1 { 0%,100%{transform:translate(-8px,-3px)} 33%{transform:translate(5px,-7px)} 66%{transform:translate(3px,7px)} }
+  @keyframes qp2 { 0%,100%{transform:translate(7px,-5px)} 33%{transform:translate(-4px,6px)} 66%{transform:translate(-7px,-2px)} }
+  @keyframes qp3 { 0%,100%{transform:translate(0,8px)} 33%{transform:translate(7px,-2px)} 66%{transform:translate(-6px,-5px)} }
+
+  /* ─── ORBITAL RINGS ───────────────────────── */
+  .orbit-ring {
+    position: absolute;
+    width: 140px; height: 140px;
+    border: 1px solid rgba(0,229,255,0.18);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    margin-top: -70px; margin-left: -70px;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+  }
+
+  .orbit-ring .electron {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: var(--holo-bright);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--holo);
+    top: -2px; left: 50%; margin-left: -2px;
+  }
+
+  .orbit-1 { animation: os1 7s linear infinite; }
+  .orbit-2 {
+    width: 130px; height: 130px;
+    margin-top: -65px; margin-left: -65px;
+    animation: os2 9s linear infinite;
+  }
+  .orbit-3 { width: 185px; height: 185px; margin-top: -92.5px; margin-left: -92.5px; border-style: dashed; border-color: rgba(0,229,255,0.1); animation: os3 12s linear infinite; display: none; }
+
+  @keyframes os1 { from{transform:rotateX(72deg) rotateZ(0)} to{transform:rotateX(72deg) rotateZ(360deg)} }
+  @keyframes os2 { from{transform:rotateX(72deg) rotateY(60deg) rotateZ(0)} to{transform:rotateX(72deg) rotateY(60deg) rotateZ(360deg)} }
+  @keyframes os3 { from{transform:rotateX(72deg) rotateY(120deg) rotateZ(0)} to{transform:rotateX(72deg) rotateY(120deg) rotateZ(360deg)} }
+
+  /* ─── GLOW PINGS ──────────────────────────── */
+  .glow-ping {
+    position: absolute;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,229,255,0.2);
+    top: 50%; left: 50%;
+    margin-top: -23px; margin-left: -23px;
+    animation: gp 4s ease-out infinite;
     pointer-events: none;
+    z-index: 5;
   }
 
-  .guide-cover-title {
-    font-family: var(--font-display); font-size: 38px;
-    color: #ffcc00; text-align: center; line-height: 1.1;
-    text-shadow: 0 0 20px rgba(255,204,0,0.4), 0 2px 4px rgba(0,0,0,0.5);
-    letter-spacing: -0.5px; font-weight: 700;
-    margin-bottom: 16px;
-  }
+  .glow-ping:nth-child(2) { animation-delay: 1.33s; }
+  .glow-ping:nth-child(3) { animation-delay: 2.66s; }
 
-  .guide-cover-subtitle {
-    font-family: var(--font-body); font-size: 9px;
-    color: rgba(255,255,255,0.35); text-align: center;
-    letter-spacing: 3px; text-transform: uppercase;
-    line-height: 1.5;
-  }
+  @keyframes gp { 0%{transform:scale(1);opacity:0.4} 100%{transform:scale(4.5);opacity:0} }
 
-  .guide-cover-line {
-    width: 60%; height: 1px; margin: 12px 0;
-    background: linear-gradient(90deg, transparent, rgba(255,204,0,0.25), transparent);
-  }
-
-  .guide-screen {
-    position: absolute; inset: 12px;
-    background: linear-gradient(170deg, #0a1a14 0%, #0d2218 50%, #091a12 100%);
-    border-radius: 6px; padding: 18px 14px;
-    border: 1px solid rgba(0,229,255,0.08);
-    opacity: 0; transform: scale(0.98);
-    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
-    display: flex; flex-direction: column;
-    overflow-y: auto;
-  }
-
-  .guide-screen.active {
-    opacity: 1; transform: scale(1);
-  }
-
-  .guide-entry-title {
-    font-family: var(--font-display); font-size: 13px;
-    color: var(--holo); letter-spacing: 3px;
-    text-transform: uppercase; margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(0,229,255,0.1);
-  }
-
-  .guide-entry-text {
-    font-family: var(--font-body); font-size: 11px;
-    color: rgba(180,230,210,0.7); line-height: 1.65;
-    letter-spacing: 0.2px;
-  }
-
-  .guide-entry-text em {
-    color: rgba(255,204,0,0.6); font-style: normal;
-  }
-
-  .guide-cursor {
-    display: inline-block; width: 6px; height: 12px;
-    background: var(--holo); opacity: 0;
-    animation: guide-blink 1s step-end infinite 1.2s;
-    margin-left: 2px; vertical-align: text-bottom;
-  }
-
-  @keyframes guide-blink {
-    0%, 100% { opacity: 0; } 50% { opacity: 0.7; }
-  }
-
-  .guide-label {
-    margin-top: 32px;
-    font-family: var(--font-display); font-size: 16px;
-    color: rgba(0,229,255,0.4); letter-spacing: 2px;
+  /* ─── PROTON LABEL ────────────────────────── */
+  .proton-label {
+    margin-top: 48px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: rgba(0,229,255,0.4);
+    letter-spacing: 2px;
     text-shadow: 0 0 14px rgba(0,229,255,0.15);
     opacity: 0;
     animation: lm 1.2s ease-out 0.8s forwards, lb 5s ease-in-out 2s infinite;
@@ -202,14 +231,23 @@
 
   /* ─── BURST EFFECTS ───────────────────────── */
   .shockwave {
-    position: absolute; top: 50%; left: 50%; width: 0; height: 0;
-    border-radius: 50%; border: 2px solid rgba(0,229,255,0.7);
-    transform: translate(-50%,-50%); pointer-events: none; opacity: 0;
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(0,229,255,0.7);
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    opacity: 0;
   }
 
   .shockwave.active { animation: swe 1s ease-out forwards; }
 
-  @keyframes swe { 0%{width:0;height:0;opacity:1;border-width:3px} 60%{opacity:0.5} 100%{width:200vmax;height:200vmax;opacity:0;border-width:0.5px} }
+  @keyframes swe {
+    0% { width:0;height:0;opacity:1;border-width:3px }
+    60% { opacity:0.5 }
+    100% { width:200vmax;height:200vmax;opacity:0;border-width:0.5px }
+  }
 
   .screen-flash {
     position: fixed; inset: 0;
@@ -222,45 +260,73 @@
 
   #burstCanvas { position: fixed; inset: 0; z-index: 210; pointer-events: none; display: none; }
 
-  /* ═══ INVOICE CONTAINER ═══════════════════════ */
+  /* ═══════════════════════════════════════════
+     INVOICE CONTAINER
+     ═══════════════════════════════════════════ */
   .invoice-container {
-    opacity: 0; transform: scale(0.88);
+    opacity: 0;
+    transform: scale(0.88);
     transition: opacity 1s ease-out, transform 1s cubic-bezier(0.22,1,0.36,1);
     pointer-events: none;
   }
 
-  .invoice-container.revealed { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .invoice-container.revealed {
+    opacity: 1; transform: scale(1); pointer-events: auto;
+  }
 
   .holo-scene {
-    position: relative; z-index: 1; min-height: 100vh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    perspective: 1200px; perspective-origin: 50% 60%;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+    perspective-origin: 50% 60%;
     padding: 60px 12px 140px;
     overflow-x: clip;
   }
 
-  /* ─── EMITTER ─────────────────────────────── */
-  .emitter { position: relative; width: 100%; max-width: 400px; height: 14px; margin-top: 20px; z-index: 5; }
+  /* ─── EMITTER ──────────────────────────────── */
+  .emitter {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 14px;
+    margin-top: 20px;
+    z-index: 5;
+  }
 
   .emitter-body {
-    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
     width: 200px; height: 10px;
     background: linear-gradient(180deg, #0a2030, #051018);
-    border: 1px solid rgba(0,229,255,0.15); border-radius: 5px;
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 5px;
     box-shadow: 0 0 16px rgba(0,229,255,0.08);
   }
 
   .emitter-core {
-    position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
-    width: 60px; height: 3px; background: var(--holo); border-radius: 2px;
+    position: absolute;
+    bottom: 2px; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 3px;
+    background: var(--holo);
+    border-radius: 2px;
     box-shadow: 0 0 8px var(--holo), 0 0 20px rgba(0,229,255,0.4);
     animation: ep 2s ease-in-out infinite;
   }
 
   .emitter-ring {
-    position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
+    position: absolute;
+    bottom: -3px; left: 50%;
+    transform: translateX(-50%);
     width: 100px; height: 6px;
-    border: 1px solid rgba(0,229,255,0.06); border-radius: 50%;
+    border: 1px solid rgba(0,229,255,0.06);
+    border-radius: 50%;
     animation: re 3s ease-out infinite;
   }
 
@@ -270,21 +336,33 @@
   @keyframes ep { 0%,100%{opacity:0.8} 50%{opacity:1;box-shadow:0 0 12px var(--holo),0 0 28px rgba(0,229,255,0.5)} }
   @keyframes re { 0%{width:60px;opacity:0.3} 100%{width:300px;opacity:0} }
 
+  /* ─── BEAM ─────────────────────────────────── */
   .beam {
-    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    position: absolute;
+    bottom: 100%; left: 50%;
+    transform: translateX(-50%);
     width: 0; height: 0;
-    border-left: 300px solid transparent; border-right: 300px solid transparent;
+    border-left: 300px solid transparent;
+    border-right: 300px solid transparent;
     border-bottom: 700px solid rgba(0,229,255,0.01);
-    pointer-events: none; filter: blur(1px);
+    pointer-events: none;
+    filter: blur(1px);
   }
 
   /* ─── HOLOGRAM CARD ────────────────────────── */
   .holo-wrap {
-    transform-style: preserve-3d; width: 100%; max-width: 860px;
-    animation: hf 10s ease-in-out infinite; will-change: transform; position: relative;
+    transform-style: preserve-3d;
+    width: 100%;
+    max-width: 860px;
+    animation: hf 10s ease-in-out infinite;
+    will-change: transform;
+    position: relative;
   }
 
-  @keyframes hf { 0%,100%{transform:translateY(0) rotateX(1.5deg)} 50%{transform:translateY(-6px) rotateX(2deg)} }
+  @keyframes hf {
+    0%,100% { transform: translateY(0) rotateX(1.5deg); }
+    50% { transform: translateY(-6px) rotateX(2deg); }
+  }
 
   .hologram {
     position: relative;
@@ -293,12 +371,16 @@
     padding: 32px 20px;
     overflow: hidden;
     backdrop-filter: blur(2px);
-    box-shadow: 0 0 24px rgba(0,229,255,0.08), 0 0 50px rgba(0,229,255,0.03), inset 0 0 50px rgba(0,229,255,0.02);
+    box-shadow:
+      0 0 24px rgba(0,229,255,0.08),
+      0 0 50px rgba(0,229,255,0.03),
+      inset 0 0 50px rgba(0,229,255,0.02);
     animation: hfl 0.15s steps(2) infinite;
   }
 
   .hologram::before {
-    content: ''; position: absolute; inset: 0;
+    content: '';
+    position: absolute; inset: 0;
     background: repeating-linear-gradient(180deg, transparent 0px, transparent 2px, rgba(0,229,255,0.012) 2px, rgba(0,229,255,0.012) 4px);
     pointer-events: none; z-index: 60;
     animation: ss 8s linear infinite;
@@ -307,7 +389,8 @@
   @keyframes ss { to { transform: translateY(4px); } }
 
   .hologram::after {
-    content: ''; position: absolute; inset: 0;
+    content: '';
+    position: absolute; inset: 0;
     background:
       repeating-linear-gradient(90deg, rgba(0,229,255,0.015) 0px, transparent 1px, transparent 50px),
       repeating-linear-gradient(0deg, rgba(0,229,255,0.015) 0px, transparent 1px, transparent 50px);
@@ -319,7 +402,8 @@
   .scan-bar {
     position: absolute; left: 0; right: 0; height: 50px;
     background: linear-gradient(180deg, transparent, rgba(0,229,255,0.05) 40%, rgba(0,229,255,0.05) 60%, transparent);
-    pointer-events: none; z-index: 61; animation: ssw 6s ease-in-out infinite;
+    pointer-events: none; z-index: 61;
+    animation: ssw 6s ease-in-out infinite;
   }
 
   @keyframes ssw { 0%,100%{top:-50px} 50%{top:100%} }
@@ -348,63 +432,41 @@
   .corner-bl { bottom:-1px;left:-1px;border-bottom:2px solid var(--holo);border-left:2px solid var(--holo); }
   .corner-br { bottom:-1px;right:-1px;border-bottom:2px solid var(--holo);border-right:2px solid var(--holo); }
 
-  .corner::after { content:''; position:absolute; width:3px; height:3px; background:var(--holo); box-shadow:0 0 5px var(--holo); }
+  .corner::after {
+    content:''; position:absolute; width:3px; height:3px;
+    background:var(--holo); box-shadow:0 0 5px var(--holo);
+  }
+
   .corner-tl::after{top:-1px;left:-1px} .corner-tr::after{top:-1px;right:-1px}
   .corner-bl::after{bottom:-1px;left:-1px} .corner-br::after{bottom:-1px;right:-1px}
 
-  /* ─── RESTAURANT ICON ────────────────────── */
-  .restaurant-icon {
-    position: relative;
-    width: 48px; height: 48px;
-    margin-bottom: 8px;
-    cursor: pointer;
-  }
-
-  .restaurant-icon svg {
-    width: 100%; height: 100%;
-    filter: drop-shadow(0 0 5px rgba(0,229,255,0.35)) drop-shadow(0 0 12px rgba(0,229,255,0.12));
-    animation: ib 4s ease-in-out infinite;
-  }
-
-  .restaurant-icon svg .icon-stroke { fill: none; stroke: var(--holo); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
-  .restaurant-icon svg .icon-fill { fill: var(--holo); opacity: 0.15; }
-  .restaurant-icon svg .icon-dot { fill: var(--holo); }
-  .restaurant-icon svg .icon-text { fill: var(--holo); font-family: var(--font-body); font-size: 3.2px; letter-spacing: 0.4px; text-transform: uppercase; font-weight: 600; opacity: 0.7; }
-
-  @keyframes ib {
-    0%, 100% { filter: drop-shadow(0 0 5px rgba(0,229,255,0.35)) drop-shadow(0 0 12px rgba(0,229,255,0.12)); }
-    50% { filter: drop-shadow(0 0 8px rgba(0,229,255,0.5)) drop-shadow(0 0 20px rgba(0,229,255,0.2)); }
-  }
-
-  .restaurant-icon .forty-two {
-    position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
-    font-family: var(--font-display); font-size: 12px; color: var(--holo-bright);
-    opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
-    text-shadow: 0 0 8px rgba(0,229,255,0.5); pointer-events: none;
-  }
-
-  .restaurant-icon:hover .forty-two { opacity: 1; transform: translateX(-50%) translateY(-3px); }
-
-  /* ─── DON'T PANIC WATERMARK ──────────────── */
-  .dont-panic {
-    position: absolute; bottom: -4px; right: -4px;
-    font-family: var(--font-display); font-size: 60px;
-    color: rgba(0,229,255,0.02); pointer-events: none;
-    line-height: 1; user-select: none; letter-spacing: 1px;
-  }
-
   /* ─── HEADER ─────────────────────────────── */
   .header {
-    display: flex; flex-direction: column; gap: 16px;
-    margin-bottom: 28px; padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
     border-bottom: 1px solid var(--border);
     position: relative; z-index: 10;
   }
 
-  .brand { display: flex; flex-direction: column; gap: 0; }
+  .brand { display: flex; flex-direction: column; gap: 4px; }
+
+  .brand-icon {
+    width: 30px; height: 30px;
+    border: 1.5px solid var(--holo);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 6px;
+    box-shadow: 0 0 10px rgba(0,229,255,0.2);
+  }
+
+  .brand-icon::after { content:''; width:5px; height:5px; background:var(--holo); border-radius:50%; box-shadow:0 0 6px var(--holo); }
 
   .brand-name {
-    font-family: var(--font-display); font-size: 28px; color: var(--holo);
+    font-family: var(--font-display);
+    font-size: 28px; color: var(--holo);
     line-height: 1.1; letter-spacing: 0.5px;
     text-shadow: 0 0 10px rgba(0,229,255,0.4);
   }
@@ -412,7 +474,8 @@
   .invoice-title { text-align: left; }
 
   .invoice-title h1 {
-    font-family: var(--font-display); font-size: 38px; color: var(--holo-bright);
+    font-family: var(--font-display);
+    font-size: 38px; color: var(--holo-bright);
     line-height: 1; margin-bottom: 8px; letter-spacing: 1px;
     text-shadow: 0 0 14px rgba(0,229,255,0.45);
   }
@@ -424,7 +487,8 @@
     padding: 4px 6px; margin: -4px -6px;
     transition: all 0.2s ease;
     min-width: 40px; display: inline-block;
-    color: var(--text); min-height: 28px;
+    color: var(--text);
+    min-height: 28px;
   }
 
   [contenteditable]:focus {
@@ -433,33 +497,54 @@
     box-shadow: 0 2px 10px rgba(0,229,255,0.1);
   }
 
-  [contenteditable]:empty::before { content: attr(data-placeholder); color: var(--text-dim); font-style: italic; }
+  [contenteditable]:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-dim); font-style: italic;
+  }
 
   /* ─── META ROW ───────────────────────────── */
-  .meta-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; position: relative; z-index: 10; }
+  .meta-row {
+    display: flex; flex-wrap: wrap;
+    gap: 16px; margin-bottom: 28px;
+    position: relative; z-index: 10;
+  }
+
   .meta-item { text-align: left; flex: 1; min-width: 100px; }
-  .meta-label { font-family: var(--font-body); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-label); margin-bottom: 3px; font-weight: 600; }
+
+  .meta-label {
+    font-family: var(--font-body);
+    font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text-label);
+    margin-bottom: 3px; font-weight: 600;
+  }
+
   .meta-value { font-size: 14px; color: var(--text-bright); font-weight: 600; }
 
   /* ─── PARTIES ──────────────────────────────── */
   .parties {
-    display: grid; grid-template-columns: 1fr; gap: 24px;
-    margin-bottom: 28px; padding-bottom: 24px;
+    display: grid; grid-template-columns: 1fr;
+    gap: 24px; margin-bottom: 28px;
+    padding-bottom: 24px;
     border-bottom: 1px solid var(--border);
     position: relative; z-index: 10;
   }
 
   .party-label {
-    font-family: var(--font-body); font-size: 9px; letter-spacing: 2px;
+    font-family: var(--font-body);
+    font-size: 9px; letter-spacing: 2px;
     text-transform: uppercase; color: var(--text-label);
     margin-bottom: 8px; font-weight: 600;
     display: flex; align-items: center; gap: 6px;
   }
 
-  .party-label::before { content:''; width:12px; height:1px; background:var(--holo-dim); box-shadow:0 0 3px var(--holo-dim); }
+  .party-label::before {
+    content:''; width:12px; height:1px;
+    background:var(--holo-dim); box-shadow:0 0 3px var(--holo-dim);
+  }
 
   .party-name {
-    font-family: var(--font-display); font-size: 22px; color: var(--holo);
+    font-family: var(--font-display);
+    font-size: 22px; color: var(--holo);
     margin-bottom: 4px; letter-spacing: 0.5px;
     text-shadow: 0 0 8px rgba(0,229,255,0.2);
   }
@@ -472,7 +557,8 @@
   .items-table { width: 100%; border-collapse: collapse; }
 
   .items-table thead th {
-    font-family: var(--font-body); font-size: 9px; letter-spacing: 2px;
+    font-family: var(--font-body);
+    font-size: 9px; letter-spacing: 2px;
     text-transform: uppercase; color: var(--text-label);
     font-weight: 600; text-align: left;
     padding: 0 8px 10px; white-space: nowrap;
@@ -483,11 +569,17 @@
   .items-table thead th:nth-child(3),
   .items-table thead th:nth-child(4) { text-align: right; }
 
-  .items-table tbody td { padding: 12px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .items-table tbody td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
 
   .items-table tbody td:nth-child(2),
   .items-table tbody td:nth-child(3),
-  .items-table tbody td:nth-child(4) { text-align: right; font-variant-numeric: tabular-nums; }
+  .items-table tbody td:nth-child(4) {
+    text-align: right; font-variant-numeric: tabular-nums;
+  }
 
   .item-desc { color: var(--text-bright); font-size: 13px; }
   .item-subdesc { color: var(--text-dim); font-size: 11px; margin-top: 2px; }
@@ -495,98 +587,162 @@
   .add-row {
     display: flex; align-items: center; gap: 6px;
     padding: 12px 10px; color: var(--text-dim);
-    font-family: var(--font-body); font-size: 11px; letter-spacing: 1.5px;
+    font-family: var(--font-body);
+    font-size: 11px; letter-spacing: 1.5px;
     text-transform: uppercase; cursor: pointer;
     border: 1px dashed rgba(0,229,255,0.1);
     background: transparent; width: 100%;
     transition: all 0.2s ease;
-    margin-top: 4px; font-weight: 600; min-height: 44px;
+    margin-top: 4px; font-weight: 600;
+    min-height: 44px;
   }
 
   .add-row span { font-size: 16px; line-height: 1; }
 
   /* ─── TOTALS ─────────────────────────────── */
-  .totals-section { display: flex; justify-content: flex-end; margin-bottom: 28px; position: relative; z-index: 10; }
+  .totals-section {
+    display: flex; justify-content: flex-end;
+    margin-bottom: 28px; position: relative; z-index: 10;
+  }
+
   .totals { width: 100%; max-width: 300px; }
 
-  .total-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); align-items: center; }
-  .total-row:last-child { border-bottom: none; padding-top: 12px; margin-top: 4px; border-top: 1px solid var(--border-bright); }
-  .total-label { font-family: var(--font-body); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); font-weight: 600; }
+  .total-row {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+
+  .total-row:last-child {
+    border-bottom: none; padding-top: 12px; margin-top: 4px;
+    border-top: 1px solid var(--border-bright);
+  }
+
+  .total-label {
+    font-family: var(--font-body);
+    font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text-dim); font-weight: 600;
+  }
+
   .total-row:last-child .total-label { color: var(--text-label); font-size: 11px; }
+
   .total-value { font-weight: 700; color: var(--text-bright); font-variant-numeric: tabular-nums; }
 
   .total-row:last-child .total-value {
-    font-family: var(--font-display); font-size: 24px; color: var(--holo-bright);
+    font-family: var(--font-display);
+    font-size: 24px; color: var(--holo-bright);
     text-shadow: 0 0 12px rgba(0,229,255,0.4);
   }
 
   /* ─── FOOTER ─────────────────────────────── */
   .footer {
-    display: grid; grid-template-columns: 1fr; gap: 20px;
-    padding-top: 20px; border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr;
+    gap: 20px; padding-top: 20px;
+    border-top: 1px solid var(--border);
     position: relative; z-index: 10;
   }
 
-  .footer-section-label { font-family: var(--font-body); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-label); margin-bottom: 6px; font-weight: 600; }
+  .footer-section-label {
+    font-family: var(--font-body);
+    font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text-label);
+    margin-bottom: 6px; font-weight: 600;
+  }
+
   .footer-content { font-size: 12px; line-height: 1.7; color: var(--text); }
 
   /* ─── STATUS BADGE ─────────────────────────── */
   .status-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 16px; border: 1px solid var(--holo-dim);
-    font-family: var(--font-body); font-size: 10px; letter-spacing: 2px;
+    padding: 6px 16px;
+    border: 1px solid var(--holo-dim);
+    font-family: var(--font-body);
+    font-size: 10px; letter-spacing: 2px;
     text-transform: uppercase; color: var(--holo-dim);
-    font-weight: 600; cursor: pointer; margin-top: 4px;
-    transition: all 0.2s ease; min-height: 36px;
+    font-weight: 600; cursor: pointer;
+    margin-top: 4px; transition: all 0.2s ease;
+    min-height: 36px;
   }
 
-  .status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--holo-dim); box-shadow: 0 0 5px rgba(0,229,255,0.4); animation: pd 2s ease-in-out infinite; }
+  .status-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--holo-dim);
+    box-shadow: 0 0 5px rgba(0,229,255,0.4);
+    animation: pd 2s ease-in-out infinite;
+  }
+
   .status-badge.paid { border-color: #00cc66; color: #00cc66; }
   .status-badge.paid .status-dot { background: #00cc66; box-shadow: 0 0 5px rgba(0,204,102,0.4); }
 
   @keyframes pd { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  /* ─── HUD (simplified) ──────────────────── */
+  /* ─── HUD (simplified for mobile) ──────── */
   .hud-label {
-    position: absolute; font-family: var(--font-body);
-    font-size: 8px; letter-spacing: 1.5px; color: var(--text-dim);
-    text-transform: uppercase; z-index: 65; pointer-events: none; font-weight: 600;
+    position: absolute;
+    font-family: var(--font-body);
+    font-size: 8px; letter-spacing: 1.5px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    z-index: 65; pointer-events: none; font-weight: 600;
   }
 
-  .hud-tl { top: 10px; left: 12px; } .hud-tr { top: 10px; right: 12px; text-align: right; }
-  .hud-bl { bottom: 10px; left: 12px; } .hud-br { bottom: 10px; right: 12px; text-align: right; }
+  .hud-tl { top: 10px; left: 12px; }
+  .hud-tr { top: 10px; right: 12px; text-align: right; }
+  .hud-bl { bottom: 10px; left: 12px; }
+  .hud-br { bottom: 10px; right: 12px; text-align: right; }
+
   .hud-label .val { color: var(--holo-dim); font-size: 10px; letter-spacing: 0.5px; font-style: italic; }
 
+  /* ─── PARTICLES (canvas) ─────────────────── */
   #particleCanvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
 
   /* ─── TOOLBAR ────────────────────────────── */
   .toolbar {
     position: fixed; bottom: 0; left: 0; right: 0;
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 1px;
+    display: flex; flex-wrap: wrap;
+    justify-content: center;
+    gap: 1px;
     background: rgba(0,8,20,0.95);
     border-top: 1px solid rgba(0,229,255,0.1);
-    padding: 6px 4px; padding-bottom: calc(6px + env(safe-area-inset-bottom));
-    z-index: 100; backdrop-filter: blur(12px);
-    opacity: 0; transform: translateY(20px);
+    padding: 6px 4px;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
     pointer-events: none;
   }
 
-  .toolbar.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-
-  .toolbar button {
-    font-family: var(--font-body); font-size: 11px; letter-spacing: 1px;
-    text-transform: uppercase; padding: 10px 14px;
-    background: transparent; border: none;
-    color: rgba(0,229,255,0.35); cursor: pointer;
-    transition: all 0.15s ease; font-weight: 600; min-height: 44px;
+  .toolbar.visible {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
   }
 
-  .toolbar button:active { color: var(--holo); background: rgba(0,229,255,0.08); }
-  .toolbar button.primary-action { color: var(--holo); border: 1px solid rgba(0,229,255,0.2); }
+  .toolbar button {
+    font-family: var(--font-body);
+    font-size: 11px; letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    background: transparent; border: none;
+    color: rgba(0,229,255,0.35);
+    cursor: pointer; transition: all 0.15s ease;
+    font-weight: 600;
+    min-height: 44px;
+  }
+
+  .toolbar button:active {
+    color: var(--holo);
+    background: rgba(0,229,255,0.08);
+  }
+
+  .toolbar button.primary-action {
+    color: var(--holo);
+    border: 1px solid rgba(0,229,255,0.2);
+  }
+
   .toolbar .sep { width: 1px; background: rgba(0,229,255,0.06); margin: 6px 1px; }
 
-  /* ─── RESPONSIVE ─────────────────────────── */
+  /* ─── RESPONSIVE: LARGER MOBILE / SMALL TABLET ── */
   @media (min-width: 600px) {
     .hologram { padding: 40px 36px; }
     .header { flex-direction: row; justify-content: space-between; align-items: flex-start; }
@@ -597,10 +753,9 @@
     .invoice-title h1 { font-size: 46px; }
     .meta-row { justify-content: flex-end; }
     .meta-item { text-align: right; flex: none; }
-    .restaurant-icon { width: 52px; height: 52px; }
-    .dont-panic { font-size: 80px; }
   }
 
+  /* ─── RESPONSIVE: TABLET / SMALL DESKTOP ─────── */
   @media (min-width: 860px) {
     body { font-size: 15px; }
     .hologram { padding: 52px 58px; }
@@ -610,24 +765,23 @@
     .party-name { font-size: 26px; }
     .party-details { font-size: 13px; }
     .item-desc { font-size: 14px; }
-    .guide-device { width: 280px; height: 380px; border-radius: 16px; }
-    .guide-cover-title { font-size: 48px; }
-    .guide-cover-subtitle { font-size: 10px; letter-spacing: 4px; }
-    .guide-screen { inset: 16px; padding: 22px 18px; }
-    .guide-entry-title { font-size: 14px; }
-    .guide-entry-text { font-size: 12.5px; line-height: 1.7; }
-    .guide-label { font-size: 20px; margin-top: 40px; }
-    .restaurant-icon { width: 56px; height: 56px; }
-    .dont-panic { font-size: 100px; }
+    .proton-assembly { width: 240px; height: 240px; }
+    .proton-core { width: 52px; height: 52px; }
+    .orbit-ring { width: 170px; height: 170px; margin-top: -85px; margin-left: -85px; }
+    .orbit-2 { width: 160px; height: 160px; margin-top: -80px; margin-left: -80px; }
+    .orbit-3 { display: block; width: 200px; height: 200px; margin-top: -100px; margin-left: -100px; }
+    .proton-label { font-size: 24px; margin-top: 60px; }
     .toolbar {
       bottom: 24px; left: 50%; right: auto;
       transform: translateX(-50%) translateY(20px);
       border-top: none; border: 1px solid rgba(0,229,255,0.1);
-      flex-wrap: nowrap; padding-bottom: 4px;
+      flex-wrap: nowrap;
+      padding-bottom: 4px;
     }
     .toolbar.visible { transform: translateX(-50%) translateY(0); }
   }
 
+  /* ─── RESPONSIVE: LARGE DESKTOP ────────────────── */
   @media (min-width: 1200px) {
     body { font-size: 16px; }
     .hologram { padding: 60px 72px; }
@@ -637,8 +791,6 @@
     .party-name { font-size: 28px; }
     .footer-content { font-size: 13px; }
     .total-row:last-child .total-value { font-size: 28px; }
-    .restaurant-icon { width: 62px; height: 62px; }
-    .dont-panic { font-size: 120px; }
   }
 
   /* ─── PRINT ──────────────────────────────── */
@@ -646,18 +798,13 @@
     body { background: #fff; color: #111; }
     .space, .toolbar, .add-row, #particleCanvas, #burstCanvas,
     .scan-bar, .chroma-edge, .glitch-layer, .emitter,
-    .beam, .hud-label, .dont-panic, .guide-intro { display: none !important; }
+    .beam, .hud-label, .proton-intro { display: none !important; }
     .invoice-container { opacity:1!important; transform:none!important; pointer-events:auto!important; }
     .holo-scene { perspective:none; padding:0; min-height:auto; }
     .holo-wrap { animation:none!important; transform:none!important; }
     .hologram { background:#fff; border:1px solid #ddd; box-shadow:none; padding:24px; animation:none!important; }
     .hologram::before, .hologram::after { display:none; }
     .corner { display:none; }
-    .restaurant-icon svg { filter: none; animation: none; }
-    .restaurant-icon svg .icon-stroke { stroke: #333; }
-    .restaurant-icon svg .icon-fill { fill: #333; opacity: 0.08; }
-    .restaurant-icon svg .icon-dot { fill: #333; }
-    .restaurant-icon .forty-two { display: none; }
     .brand-name, .party-name, .invoice-title h1 { color:#111!important; text-shadow:none!important; }
     [contenteditable] { color:#222!important; border-bottom-color:transparent; }
     .meta-label, .party-label, .total-label, .footer-section-label, .items-table thead th { color:#666!important; }
@@ -672,26 +819,21 @@
 <canvas id="burstCanvas"></canvas>
 <canvas id="particleCanvas"></canvas>
 
-<!-- ═══ GUIDE INTRO ══════════════════════════════ -->
-<div class="guide-intro" id="guideIntro">
-  <div class="guide-device" id="guideDevice">
-    <div class="guide-spine"></div>
-    <div class="guide-cover" id="guideCover">
-      <div class="guide-cover-subtitle">The Hitchhiker's Guide to</div>
-      <div class="guide-cover-line"></div>
-      <div class="guide-cover-title">DON'T<br>PANIC</div>
-      <div class="guide-cover-line"></div>
-      <div class="guide-cover-subtitle">the Galaxy</div>
-    </div>
-    <div class="guide-screen" id="guideScreen">
-      <div class="guide-entry-title">INVOICE (n.)</div>
-      <div class="guide-entry-text">
-        A ritualistic document exchanged among the bipedal carbon-based life forms of <em>Earth</em> who, having recklessly abandoned the straightforward practice of hitting each other over the head and simply taking things, instead devised an astonishingly elaborate system of politely worded threats demanding abstract numerical tokens their entire civilisation has collectively agreed to pretend have value.<br><br>The practice is considered <em>mildly amusing</em> by more sophisticated species, most of whom gave up economics entirely after lunch.
-        <span class="guide-cursor"></span>
-      </div>
-    </div>
+<!-- ═══ PROTON INTRO ════════════════════════════ -->
+<div class="proton-intro" id="protonIntro">
+  <div class="proton-assembly">
+    <div class="glow-ping"></div>
+    <div class="glow-ping"></div>
+    <div class="glow-ping"></div>
+    <div class="orbit-ring orbit-1"><div class="electron"></div></div>
+    <div class="orbit-ring orbit-2"><div class="electron"></div></div>
+    <div class="orbit-ring orbit-3"><div class="electron"></div></div>
+    <div class="proton-core"></div>
+    <div class="quark quark-r"></div>
+    <div class="quark quark-g"></div>
+    <div class="quark quark-b"></div>
   </div>
-  <div class="guide-label">tap to consult the guide</div>
+  <div class="proton-label">open your invoice</div>
   <div class="shockwave" id="shockwave"></div>
   <div class="screen-flash" id="screenFlash"></div>
 </div>
@@ -708,44 +850,15 @@
         <div class="corner corner-tr"></div>
         <div class="corner corner-bl"></div>
         <div class="corner corner-br"></div>
-        <div class="dont-panic">Don't Panic</div>
 
         <div class="hud-label hud-tl">Invoice<br><span class="val" id="hudTime">00:00:00</span></div>
         <div class="hud-label hud-tr">HeartmindSpaces<br><span class="val">v3.2.1</span></div>
+        <div class="hud-label hud-bl">Projection<br><span class="val">Active</span></div>
+        <div class="hud-label hud-br">Signal<br><span class="val" id="hudSignal">98.7%</span></div>
 
         <div class="header">
           <div class="brand">
-            <div class="restaurant-icon" title="The Restaurant at the End of the Universe">
-              <span class="forty-two">42</span>
-              <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="28" cy="30" rx="24" ry="10" class="icon-fill"/>
-                <ellipse cx="28" cy="30" rx="24" ry="10" class="icon-stroke"/>
-                <ellipse cx="28" cy="30" rx="15" ry="6" class="icon-stroke" style="stroke-dasharray: 2 3; opacity: 0.4;"/>
-                <line x1="18" y1="8" x2="18" y2="26" class="icon-stroke"/>
-                <line x1="15" y1="8" x2="15" y2="14" class="icon-stroke" style="stroke-width:1;"/>
-                <line x1="18" y1="8" x2="18" y2="14" class="icon-stroke" style="stroke-width:1;"/>
-                <line x1="21" y1="8" x2="21" y2="14" class="icon-stroke" style="stroke-width:1;"/>
-                <path d="M15 14 Q18 17 21 14" class="icon-stroke" style="fill:none; stroke-width:1;"/>
-                <line x1="38" y1="8" x2="38" y2="26" class="icon-stroke"/>
-                <path d="M38 8 Q42 12 38 18" class="icon-stroke" style="fill:none; stroke-width:1;"/>
-                <circle cx="8" cy="12" r="1" class="icon-dot"/>
-                <circle cx="48" cy="8" r="1.2" class="icon-dot"/>
-                <circle cx="50" cy="20" r="0.7" class="icon-dot"/>
-                <circle cx="6" cy="24" r="0.8" class="icon-dot"/>
-                <circle cx="28" cy="4" r="0.9" class="icon-dot"/>
-                <circle cx="44" cy="42" r="0.6" class="icon-dot"/>
-                <circle cx="12" cy="40" r="0.7" class="icon-dot"/>
-                <path d="M25 29 Q28 27 31 29 Q29 31 26 30" class="icon-stroke" style="stroke-width:0.8; opacity:0.5;"/>
-                <circle cx="28" cy="30" r="1.5" class="icon-dot" style="opacity:0.6;"/>
-                <line x1="28" y1="27" x2="28" y2="25.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
-                <line x1="30.5" y1="28.5" x2="32" y2="27.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
-                <line x1="25.5" y1="28.5" x2="24" y2="27.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
-                <line x1="30" y1="31.5" x2="31.5" y2="33" class="icon-stroke" style="stroke-width:0.6; opacity:0.3;"/>
-                <line x1="26" y1="31.5" x2="24.5" y2="33" class="icon-stroke" style="stroke-width:0.6; opacity:0.3;"/>
-                <path id="arcPath" d="M10 44 Q28 52 46 44" fill="none" stroke="none"/>
-                <text class="icon-text"><textPath href="#arcPath" startOffset="50%" text-anchor="middle">End of Universe Dining</textPath></text>
-              </svg>
-            </div>
+            <div class="brand-icon"></div>
             <div class="brand-name">HeartmindSpaces</div>
           </div>
           <div class="invoice-title">
@@ -758,9 +871,18 @@
         </div>
 
         <div class="meta-row">
-          <div class="meta-item"><div class="meta-label">Invoice No.</div><div class="meta-value"><span contenteditable="true" data-placeholder="HMS-0001">HMS-0001</span></div></div>
-          <div class="meta-item"><div class="meta-label">Issue Date</div><div class="meta-value"><span contenteditable="true" data-placeholder="2026-02-23">2026-02-23</span></div></div>
-          <div class="meta-item"><div class="meta-label">Due Date</div><div class="meta-value"><span contenteditable="true" data-placeholder="2026-03-23">2026-03-23</span></div></div>
+          <div class="meta-item">
+            <div class="meta-label">Invoice No.</div>
+            <div class="meta-value"><span contenteditable="true" data-placeholder="HMS-0001">HMS-0001</span></div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Issue Date</div>
+            <div class="meta-value"><span contenteditable="true" data-placeholder="2026-02-23">2026-02-23</span></div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Due Date</div>
+            <div class="meta-value"><span contenteditable="true" data-placeholder="2026-03-23">2026-03-23</span></div>
+          </div>
         </div>
 
         <div class="parties">
@@ -790,16 +912,42 @@
 
         <div class="line-items">
           <table class="items-table">
-            <thead><tr>
-              <th style="width:46%">Description</th>
-              <th style="width:12%">Qty</th>
-              <th style="width:20%">Rate</th>
-              <th style="width:22%">Amount</th>
-            </tr></thead>
+            <thead>
+              <tr>
+                <th style="width:46%">Description</th>
+                <th style="width:12%">Qty</th>
+                <th style="width:20%">Rate</th>
+                <th style="width:22%">Amount</th>
+              </tr>
+            </thead>
             <tbody id="itemsBody">
-              <tr><td><div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div><div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div></td><td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td><td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td><td class="line-total">$0.00</td></tr>
-              <tr><td><div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div><div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div></td><td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td><td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td><td class="line-total">$0.00</td></tr>
-              <tr><td><div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div><div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div></td><td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td><td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td><td class="line-total">$0.00</td></tr>
+              <tr>
+                <td>
+                  <div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div>
+                  <div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div>
+                </td>
+                <td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td>
+                <td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td>
+                <td class="line-total">$0.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div>
+                  <div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div>
+                </td>
+                <td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td>
+                <td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td>
+                <td class="line-total">$0.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div>
+                  <div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div>
+                </td>
+                <td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td>
+                <td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td>
+                <td class="line-total">$0.00</td>
+              </tr>
             </tbody>
           </table>
           <button class="add-row" id="addRowBtn"><span>+</span> Add Line Item</button>
@@ -807,16 +955,38 @@
 
         <div class="totals-section">
           <div class="totals">
-            <div class="total-row"><span class="total-label">Subtotal</span><span class="total-value" id="subtotal">$0.00</span></div>
-            <div class="total-row"><span class="total-label">Tax (<span contenteditable="true" id="taxRate">0</span>%)</span><span class="total-value" id="taxAmount">$0.00</span></div>
-            <div class="total-row"><span class="total-label">Discount</span><span class="total-value">-$<span contenteditable="true" id="discount">0.00</span></span></div>
-            <div class="total-row"><span class="total-label">Total Due</span><span class="total-value" id="totalDue">$0.00</span></div>
+            <div class="total-row">
+              <span class="total-label">Subtotal</span>
+              <span class="total-value" id="subtotal">$0.00</span>
+            </div>
+            <div class="total-row">
+              <span class="total-label">Tax (<span contenteditable="true" id="taxRate">0</span>%)</span>
+              <span class="total-value" id="taxAmount">$0.00</span>
+            </div>
+            <div class="total-row">
+              <span class="total-label">Discount</span>
+              <span class="total-value">-$<span contenteditable="true" id="discount">0.00</span></span>
+            </div>
+            <div class="total-row">
+              <span class="total-label">Total Due</span>
+              <span class="total-value" id="totalDue">$0.00</span>
+            </div>
           </div>
         </div>
 
         <div class="footer">
-          <div><div class="footer-section-label">Payment Details</div><div class="footer-content"><span contenteditable="true" data-placeholder="Bank / Payment method details...">Bank: First National | Routing: 000000000 | Account: 000000000</span></div></div>
-          <div><div class="footer-section-label">Notes &amp; Terms</div><div class="footer-content"><span contenteditable="true" data-placeholder="Payment terms, thank you note...">Payment due within 30 days of issue date. Late payments may incur a 1.5% monthly fee. Thank you for your trust in HeartmindSpaces.</span></div></div>
+          <div>
+            <div class="footer-section-label">Payment Details</div>
+            <div class="footer-content">
+              <span contenteditable="true" data-placeholder="Bank / Payment method details...">Bank: First National | Routing: 000000000 | Account: 000000000</span>
+            </div>
+          </div>
+          <div>
+            <div class="footer-section-label">Notes &amp; Terms</div>
+            <div class="footer-content">
+              <span contenteditable="true" data-placeholder="Payment terms, thank you note...">Payment due within 30 days of issue date. Late payments may incur a 1.5% monthly fee. Thank you for your trust in HeartmindSpaces.</span>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -848,9 +1018,10 @@
 </div>
 
 <script>
+  // ═══ DEVICE DETECTION ═══
   var isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-  // ═══ AMBIENT PARTICLES ═══
+  // ═══ AMBIENT PARTICLES (reduced for mobile) ═══
   (function() {
     var canvas = document.getElementById('particleCanvas');
     var ctx = canvas.getContext('2d');
@@ -892,7 +1063,7 @@
     animate();
   })();
 
-  // ═══ BURST PARTICLES ═══
+  // ═══ BURST PARTICLES (tuned for mobile) ═══
   function triggerBurst(cx, cy) {
     var canvas = document.getElementById('burstCanvas');
     var ctx = canvas.getContext('2d');
@@ -924,7 +1095,8 @@
       var a = (j / streakCount) * Math.PI * 2;
       particles.push({
         x: cx, y: cy,
-        vx: Math.cos(a) * 34, vy: Math.sin(a) * 34,
+        vx: Math.cos(a) * 34,
+        vy: Math.sin(a) * 34,
         size: 1.8, life: 1, decay: 0.01,
         hue: 185, isStreak: true, trail: []
       });
@@ -965,67 +1137,73 @@
     animate();
   }
 
-  // ═══ GUIDE CLICK → TRANSITION ═══
+  // ═══ PROTON CLICK → TRANSITION ═══
   (function() {
-    var intro = document.getElementById('guideIntro');
-    var device = document.getElementById('guideDevice');
-    var cover = document.getElementById('guideCover');
-    var screen = document.getElementById('guideScreen');
-    var label = document.querySelector('.guide-label');
+    var intro = document.getElementById('protonIntro');
+    var core = document.querySelector('.proton-core');
+    var orbits = document.querySelectorAll('.orbit-ring');
+    var quarks = document.querySelectorAll('.quark');
+    var label = document.querySelector('.proton-label');
+    var pings = document.querySelectorAll('.glow-ping');
     var invoice = document.getElementById('invoiceContainer');
     var toolbar = document.getElementById('toolbar');
     var shockwave = document.getElementById('shockwave');
     var flash = document.getElementById('screenFlash');
-    var phase = 0;
+    var triggered = false;
 
     intro.addEventListener('click', function() {
-      if (phase === 0) {
-        // Phase 1: Open the Guide — flip cover, reveal screen
-        phase = 1;
-        cover.classList.add('flipped');
-        screen.classList.add('active');
-        device.style.boxShadow = '0 0 40px rgba(0,229,255,0.25), 0 0 80px rgba(0,229,255,0.1), inset 0 0 30px rgba(0,229,255,0.05)';
-        label.style.transition = 'opacity 0.4s'; label.style.opacity = '0';
-        setTimeout(function() { label.textContent = 'tap again to proceed'; label.style.opacity = '0.6'; }, 600);
-      } else if (phase === 1) {
-        // Phase 2: Dissolve the Guide, reveal invoice
-        phase = 2;
-        intro.style.cursor = 'default';
-        device.style.animation = 'none';
-        device.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-        device.style.transform = 'scale(1.08)';
-        device.style.boxShadow = '0 0 60px rgba(0,229,255,0.5), 0 0 120px rgba(0,229,255,0.25)';
+      if (triggered) return;
+      triggered = true;
+      intro.style.cursor = 'default';
 
-        setTimeout(function() {
-          var rect = device.getBoundingClientRect();
-          triggerBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
-          shockwave.classList.add('active');
-          flash.classList.add('active');
-          device.style.transition = 'transform 0.5s ease-out, opacity 0.4s ease-out';
-          device.style.transform = 'scale(0)'; device.style.opacity = '0';
-          label.style.transition = 'opacity 0.3s'; label.style.opacity = '0';
-        }, 350);
+      core.style.animation = 'none';
+      core.style.transform = 'scale(1.5)';
+      core.style.boxShadow = '0 0 50px rgba(0,229,255,1),0 0 100px rgba(0,229,255,0.7),0 0 180px rgba(0,229,255,0.4)';
+      orbits.forEach(function(o) { o.style.animationDuration = '0.4s'; });
+      pings.forEach(function(p) { p.style.animationDuration = '0.5s'; });
 
-        setTimeout(function() {
-          invoice.classList.add('revealed');
-          intro.classList.add('gone');
-          document.body.style.cursor = 'crosshair';
-        }, 850);
+      setTimeout(function() {
+        core.style.transition = 'transform 0.2s ease-in,background 0.15s ease,box-shadow 0.2s ease';
+        core.style.transform = 'scale(4)';
+        core.style.background = 'radial-gradient(circle,#fff 0%,#d0f8ff 30%,#00e5ff 60%,transparent 100%)';
+        core.style.boxShadow = '0 0 80px #fff,0 0 160px rgba(0,229,255,1),0 0 280px rgba(0,229,255,0.5)';
+        quarks.forEach(function(q) { q.style.transition = 'opacity 0.15s'; q.style.opacity = '0'; });
+      }, 300);
 
-        setTimeout(function() {
-          toolbar.classList.add('visible');
-          intro.style.display = 'none';
-        }, 1850);
-      }
+      setTimeout(function() {
+        var rect = core.getBoundingClientRect();
+        triggerBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        shockwave.classList.add('active');
+        flash.classList.add('active');
+        core.style.transition = 'transform 0.5s ease-out,opacity 0.4s ease-out';
+        core.style.transform = 'scale(0)'; core.style.opacity = '0';
+        orbits.forEach(function(o) { o.style.transition = 'opacity 0.35s'; o.style.opacity = '0'; });
+        pings.forEach(function(p) { p.style.transition = 'opacity 0.25s'; p.style.opacity = '0'; });
+        label.style.transition = 'opacity 0.4s,transform 0.4s';
+        label.style.opacity = '0'; label.style.transform = 'translateY(-15px)';
+      }, 500);
+
+      setTimeout(function() {
+        invoice.classList.add('revealed');
+        intro.classList.add('gone');
+        document.body.style.cursor = 'crosshair';
+      }, 1000);
+
+      setTimeout(function() {
+        toolbar.classList.add('visible');
+        intro.style.display = 'none';
+      }, 2000);
     });
   })();
 
   // ═══ HUD CLOCK ═══
   (function() {
     var hudTime = document.getElementById('hudTime');
+    var hudSignal = document.getElementById('hudSignal');
     function tick() {
       var d = new Date();
       hudTime.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');
+      hudSignal.textContent = (97 + Math.random() * 2.8).toFixed(1) + '%';
     }
     tick(); setInterval(tick, 1000);
   })();
@@ -1053,7 +1231,7 @@
     });
   }
 
-  // ═══ ROW BUILDER ═══
+  // ═══ SAFE DOM ROW BUILDER ═══
   function createEditableSpan(cls, ph, txt) {
     var s = document.createElement('span');
     s.setAttribute('contenteditable', 'true');
@@ -1122,6 +1300,7 @@
   document.getElementById('discount').addEventListener('input', recalc);
   attachListeners();
 
+  // ═══ STATUS BADGE ═══
   document.getElementById('statusBadge').addEventListener('click', function() {
     this.classList.toggle('paid');
     this.querySelector('.status-text').textContent = this.classList.contains('paid') ? 'Paid' : 'Pending';
@@ -1133,7 +1312,7 @@
     var card = document.getElementById('holoCard');
     var fn = 'HeartmindSpaces-' + (document.querySelector('.meta-value [contenteditable]').textContent || 'HMS-0001') + '.pdf';
     wrap.style.animation = 'none'; wrap.style.transform = 'none';
-    var hide = ['.add-row', '.scan-bar', '.chroma-edge', '.glitch-layer', '.corner', '.hud-label', '.dont-panic'];
+    var hide = ['.add-row', '.scan-bar', '.chroma-edge', '.glitch-layer', '.corner', '.hud-label'];
     hide.forEach(function(s) { document.querySelectorAll(s).forEach(function(e) { e.style.display = 'none'; }); });
     card.style.animation = 'none'; card.style.background = '#0a1a2a'; card.style.border = '1px solid #1a3a5a';
     html2pdf().set({
@@ -1148,7 +1327,7 @@
     });
   }
 
-  // ═══ SAVE HTML (with guide transition) ═══
+  // ═══ SAVE HTML ═══
   function saveAsHtml() {
     recalc();
     var fn = 'HeartmindSpaces-' + (document.querySelector('.meta-value [contenteditable]').textContent || 'HMS-0001') + '.html';
