@@ -74,83 +74,122 @@
 
   @keyframes star-drift { to { transform: translate(250px, 125px); } }
 
-  /* ═══ PROTON INTRO ═══════════════════════════ */
-  .proton-intro {
+  /* ═══ GUIDE INTRO ════════════════════════════ */
+  .guide-intro {
     position: fixed; inset: 0; z-index: 200;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     cursor: pointer; transition: opacity 0.8s ease;
   }
 
-  .proton-intro.gone { opacity: 0; pointer-events: none; }
+  .guide-intro.gone { opacity: 0; pointer-events: none; }
 
-  .proton-assembly {
-    position: relative; width: 200px; height: 200px;
-    display: flex; align-items: center; justify-content: center;
-    perspective: 800px; transform-style: preserve-3d;
+  .guide-device {
+    position: relative; width: 220px; height: 300px;
+    border-radius: 14px; overflow: hidden;
+    background: linear-gradient(145deg, #0a3d2a 0%, #0d4f35 30%, #0a3d2a 70%, #072e1f 100%);
+    border: 2px solid rgba(0,229,255,0.12);
+    box-shadow:
+      0 0 30px rgba(0,229,255,0.15),
+      0 0 60px rgba(0,229,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      inset 0 0 40px rgba(0,20,10,0.4);
+    animation: guide-float 6s ease-in-out infinite;
+    transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease;
   }
 
-  .proton-core {
-    position: absolute; width: 46px; height: 46px; border-radius: 50%;
-    background: radial-gradient(circle at 38% 36%, #ffffff 0%, #c8f8ff 12%, #00e5ff 35%, rgba(0,229,255,0.4) 60%, transparent 100%);
-    box-shadow: 0 0 20px rgba(0,229,255,0.9), 0 0 45px rgba(0,229,255,0.55), 0 0 80px rgba(0,229,255,0.3), inset 0 0 12px rgba(255,255,255,0.35);
-    z-index: 10;
-    animation: nucleus-breathe 3s ease-in-out infinite;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.2s ease, opacity 0.4s ease;
+  @keyframes guide-float {
+    0%, 100% { transform: translateY(0) rotateX(2deg); }
+    50% { transform: translateY(-8px) rotateX(-1deg); }
   }
 
-  @keyframes nucleus-breathe {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0,229,255,0.9), 0 0 45px rgba(0,229,255,0.55), 0 0 80px rgba(0,229,255,0.3); }
-    50% { transform: scale(1.08); box-shadow: 0 0 28px rgba(0,229,255,1), 0 0 55px rgba(0,229,255,0.65), 0 0 100px rgba(0,229,255,0.35); }
+  .guide-spine {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+    background: linear-gradient(180deg, rgba(0,229,255,0.08) 0%, rgba(0,229,255,0.03) 50%, rgba(0,229,255,0.08) 100%);
+    border-right: 1px solid rgba(0,229,255,0.06);
   }
 
-  .quark { position: absolute; width: 6px; height: 6px; border-radius: 50%; z-index: 11; top: 50%; left: 50%; }
-  .quark-r { background: radial-gradient(circle, #ff6080 40%, transparent 100%); box-shadow: 0 0 5px #ff4060; animation: qp1 2.2s ease-in-out infinite; }
-  .quark-g { background: radial-gradient(circle, #60ff90 40%, transparent 100%); box-shadow: 0 0 5px #40ff70; animation: qp2 2.8s ease-in-out infinite; }
-  .quark-b { background: radial-gradient(circle, #6090ff 40%, transparent 100%); box-shadow: 0 0 5px #4070ff; animation: qp3 3.2s ease-in-out infinite; }
-
-  @keyframes qp1 { 0%,100%{transform:translate(-8px,-3px)} 33%{transform:translate(5px,-7px)} 66%{transform:translate(3px,7px)} }
-  @keyframes qp2 { 0%,100%{transform:translate(7px,-5px)} 33%{transform:translate(-4px,6px)} 66%{transform:translate(-7px,-2px)} }
-  @keyframes qp3 { 0%,100%{transform:translate(0,8px)} 33%{transform:translate(7px,-2px)} 66%{transform:translate(-6px,-5px)} }
-
-  .orbit-ring {
-    position: absolute; width: 140px; height: 140px;
-    border: 1px solid rgba(0,229,255,0.18); border-radius: 50%;
-    top: 50%; left: 50%; margin-top: -70px; margin-left: -70px;
-    transition: border-color 0.3s ease, opacity 0.3s ease;
+  .guide-cover {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px 20px;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    z-index: 2;
   }
 
-  .orbit-ring .electron {
-    position: absolute; width: 4px; height: 4px;
-    background: var(--holo-bright); border-radius: 50%;
-    box-shadow: 0 0 6px var(--holo);
-    top: -2px; left: 50%; margin-left: -2px;
+  .guide-cover.flipped {
+    opacity: 0; transform: rotateY(12deg) scale(0.95);
+    pointer-events: none;
   }
 
-  .orbit-1 { animation: os1 7s linear infinite; }
-  .orbit-2 { width: 130px; height: 130px; margin-top: -65px; margin-left: -65px; animation: os2 9s linear infinite; }
-  .orbit-3 { width: 185px; height: 185px; margin-top: -92.5px; margin-left: -92.5px; border-style: dashed; border-color: rgba(0,229,255,0.1); animation: os3 12s linear infinite; display: none; }
-
-  @keyframes os1 { from{transform:rotateX(72deg) rotateZ(0)} to{transform:rotateX(72deg) rotateZ(360deg)} }
-  @keyframes os2 { from{transform:rotateX(72deg) rotateY(60deg) rotateZ(0)} to{transform:rotateX(72deg) rotateY(60deg) rotateZ(360deg)} }
-  @keyframes os3 { from{transform:rotateX(72deg) rotateY(120deg) rotateZ(0)} to{transform:rotateX(72deg) rotateY(120deg) rotateZ(360deg)} }
-
-  .glow-ping {
-    position: absolute; width: 46px; height: 46px; border-radius: 50%;
-    border: 1px solid rgba(0,229,255,0.2);
-    top: 50%; left: 50%; margin-top: -23px; margin-left: -23px;
-    animation: gp 4s ease-out infinite;
-    pointer-events: none; z-index: 5;
+  .guide-cover-title {
+    font-family: var(--font-display); font-size: 38px;
+    color: #ffcc00; text-align: center; line-height: 1.1;
+    text-shadow: 0 0 20px rgba(255,204,0,0.4), 0 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: -0.5px; font-weight: 700;
+    margin-bottom: 16px;
   }
 
-  .glow-ping:nth-child(2) { animation-delay: 1.33s; }
-  .glow-ping:nth-child(3) { animation-delay: 2.66s; }
+  .guide-cover-subtitle {
+    font-family: var(--font-body); font-size: 9px;
+    color: rgba(255,255,255,0.35); text-align: center;
+    letter-spacing: 3px; text-transform: uppercase;
+    line-height: 1.5;
+  }
 
-  @keyframes gp { 0%{transform:scale(1);opacity:0.4} 100%{transform:scale(4.5);opacity:0} }
+  .guide-cover-line {
+    width: 60%; height: 1px; margin: 12px 0;
+    background: linear-gradient(90deg, transparent, rgba(255,204,0,0.25), transparent);
+  }
 
-  .proton-label {
-    margin-top: 48px;
-    font-family: var(--font-display); font-size: 20px;
+  .guide-screen {
+    position: absolute; inset: 12px;
+    background: linear-gradient(170deg, #0a1a14 0%, #0d2218 50%, #091a12 100%);
+    border-radius: 6px; padding: 18px 14px;
+    border: 1px solid rgba(0,229,255,0.08);
+    opacity: 0; transform: scale(0.98);
+    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .guide-screen.active {
+    opacity: 1; transform: scale(1);
+  }
+
+  .guide-entry-title {
+    font-family: var(--font-display); font-size: 13px;
+    color: var(--holo); letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,229,255,0.1);
+  }
+
+  .guide-entry-text {
+    font-family: var(--font-body); font-size: 11px;
+    color: rgba(180,230,210,0.7); line-height: 1.65;
+    letter-spacing: 0.2px;
+  }
+
+  .guide-entry-text em {
+    color: rgba(255,204,0,0.6); font-style: normal;
+  }
+
+  .guide-cursor {
+    display: inline-block; width: 6px; height: 12px;
+    background: var(--holo); opacity: 0;
+    animation: guide-blink 1s step-end infinite 1.2s;
+    margin-left: 2px; vertical-align: text-bottom;
+  }
+
+  @keyframes guide-blink {
+    0%, 100% { opacity: 0; } 50% { opacity: 0.7; }
+  }
+
+  .guide-label {
+    margin-top: 32px;
+    font-family: var(--font-display); font-size: 16px;
     color: rgba(0,229,255,0.4); letter-spacing: 2px;
     text-shadow: 0 0 14px rgba(0,229,255,0.15);
     opacity: 0;
@@ -571,12 +610,13 @@
     .party-name { font-size: 26px; }
     .party-details { font-size: 13px; }
     .item-desc { font-size: 14px; }
-    .proton-assembly { width: 240px; height: 240px; }
-    .proton-core { width: 52px; height: 52px; }
-    .orbit-ring { width: 170px; height: 170px; margin-top: -85px; margin-left: -85px; }
-    .orbit-2 { width: 160px; height: 160px; margin-top: -80px; margin-left: -80px; }
-    .orbit-3 { display: block; width: 200px; height: 200px; margin-top: -100px; margin-left: -100px; }
-    .proton-label { font-size: 24px; margin-top: 60px; }
+    .guide-device { width: 280px; height: 380px; border-radius: 16px; }
+    .guide-cover-title { font-size: 48px; }
+    .guide-cover-subtitle { font-size: 10px; letter-spacing: 4px; }
+    .guide-screen { inset: 16px; padding: 22px 18px; }
+    .guide-entry-title { font-size: 14px; }
+    .guide-entry-text { font-size: 12.5px; line-height: 1.7; }
+    .guide-label { font-size: 20px; margin-top: 40px; }
     .restaurant-icon { width: 56px; height: 56px; }
     .dont-panic { font-size: 100px; }
     .toolbar {
@@ -606,7 +646,7 @@
     body { background: #fff; color: #111; }
     .space, .toolbar, .add-row, #particleCanvas, #burstCanvas,
     .scan-bar, .chroma-edge, .glitch-layer, .emitter,
-    .beam, .hud-label, .dont-panic, .proton-intro { display: none !important; }
+    .beam, .hud-label, .dont-panic, .guide-intro { display: none !important; }
     .invoice-container { opacity:1!important; transform:none!important; pointer-events:auto!important; }
     .holo-scene { perspective:none; padding:0; min-height:auto; }
     .holo-wrap { animation:none!important; transform:none!important; }
@@ -632,21 +672,26 @@
 <canvas id="burstCanvas"></canvas>
 <canvas id="particleCanvas"></canvas>
 
-<!-- ═══ PROTON INTRO ═══════════════════════════ -->
-<div class="proton-intro" id="protonIntro">
-  <div class="proton-assembly">
-    <div class="glow-ping"></div>
-    <div class="glow-ping"></div>
-    <div class="glow-ping"></div>
-    <div class="orbit-ring orbit-1"><div class="electron"></div></div>
-    <div class="orbit-ring orbit-2"><div class="electron"></div></div>
-    <div class="orbit-ring orbit-3"><div class="electron"></div></div>
-    <div class="proton-core"></div>
-    <div class="quark quark-r"></div>
-    <div class="quark quark-g"></div>
-    <div class="quark quark-b"></div>
+<!-- ═══ GUIDE INTRO ══════════════════════════════ -->
+<div class="guide-intro" id="guideIntro">
+  <div class="guide-device" id="guideDevice">
+    <div class="guide-spine"></div>
+    <div class="guide-cover" id="guideCover">
+      <div class="guide-cover-subtitle">The Hitchhiker's Guide to</div>
+      <div class="guide-cover-line"></div>
+      <div class="guide-cover-title">DON'T<br>PANIC</div>
+      <div class="guide-cover-line"></div>
+      <div class="guide-cover-subtitle">the Galaxy</div>
+    </div>
+    <div class="guide-screen" id="guideScreen">
+      <div class="guide-entry-title">INVOICE (n.)</div>
+      <div class="guide-entry-text">
+        A ritualistic document exchanged among the bipedal carbon-based life forms of <em>Earth</em> who, having recklessly abandoned the straightforward practice of hitting each other over the head and simply taking things, instead devised an astonishingly elaborate system of politely worded threats demanding abstract numerical tokens their entire civilisation has collectively agreed to pretend have value.<br><br>The practice is considered <em>mildly amusing</em> by more sophisticated species, most of whom gave up economics entirely after lunch.
+        <span class="guide-cursor"></span>
+      </div>
+    </div>
   </div>
-  <div class="proton-label">open your invoice</div>
+  <div class="guide-label">tap to consult the guide</div>
   <div class="shockwave" id="shockwave"></div>
   <div class="screen-flash" id="screenFlash"></div>
 </div>
@@ -920,62 +965,58 @@
     animate();
   }
 
-  // ═══ PROTON CLICK → TRANSITION ═══
+  // ═══ GUIDE CLICK → TRANSITION ═══
   (function() {
-    var intro = document.getElementById('protonIntro');
-    var core = document.querySelector('.proton-core');
-    var orbits = document.querySelectorAll('.orbit-ring');
-    var quarks = document.querySelectorAll('.quark');
-    var label = document.querySelector('.proton-label');
-    var pings = document.querySelectorAll('.glow-ping');
+    var intro = document.getElementById('guideIntro');
+    var device = document.getElementById('guideDevice');
+    var cover = document.getElementById('guideCover');
+    var screen = document.getElementById('guideScreen');
+    var label = document.querySelector('.guide-label');
     var invoice = document.getElementById('invoiceContainer');
     var toolbar = document.getElementById('toolbar');
     var shockwave = document.getElementById('shockwave');
     var flash = document.getElementById('screenFlash');
-    var triggered = false;
+    var phase = 0;
 
     intro.addEventListener('click', function() {
-      if (triggered) return;
-      triggered = true;
-      intro.style.cursor = 'default';
+      if (phase === 0) {
+        // Phase 1: Open the Guide — flip cover, reveal screen
+        phase = 1;
+        cover.classList.add('flipped');
+        screen.classList.add('active');
+        device.style.boxShadow = '0 0 40px rgba(0,229,255,0.25), 0 0 80px rgba(0,229,255,0.1), inset 0 0 30px rgba(0,229,255,0.05)';
+        label.style.transition = 'opacity 0.4s'; label.style.opacity = '0';
+        setTimeout(function() { label.textContent = 'tap again to proceed'; label.style.opacity = '0.6'; }, 600);
+      } else if (phase === 1) {
+        // Phase 2: Dissolve the Guide, reveal invoice
+        phase = 2;
+        intro.style.cursor = 'default';
+        device.style.animation = 'none';
+        device.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+        device.style.transform = 'scale(1.08)';
+        device.style.boxShadow = '0 0 60px rgba(0,229,255,0.5), 0 0 120px rgba(0,229,255,0.25)';
 
-      core.style.animation = 'none';
-      core.style.transform = 'scale(1.5)';
-      core.style.boxShadow = '0 0 50px rgba(0,229,255,1),0 0 100px rgba(0,229,255,0.7),0 0 180px rgba(0,229,255,0.4)';
-      orbits.forEach(function(o) { o.style.animationDuration = '0.4s'; });
-      pings.forEach(function(p) { p.style.animationDuration = '0.5s'; });
+        setTimeout(function() {
+          var rect = device.getBoundingClientRect();
+          triggerBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+          shockwave.classList.add('active');
+          flash.classList.add('active');
+          device.style.transition = 'transform 0.5s ease-out, opacity 0.4s ease-out';
+          device.style.transform = 'scale(0)'; device.style.opacity = '0';
+          label.style.transition = 'opacity 0.3s'; label.style.opacity = '0';
+        }, 350);
 
-      setTimeout(function() {
-        core.style.transition = 'transform 0.2s ease-in,background 0.15s ease,box-shadow 0.2s ease';
-        core.style.transform = 'scale(4)';
-        core.style.background = 'radial-gradient(circle,#fff 0%,#d0f8ff 30%,#00e5ff 60%,transparent 100%)';
-        core.style.boxShadow = '0 0 80px #fff,0 0 160px rgba(0,229,255,1),0 0 280px rgba(0,229,255,0.5)';
-        quarks.forEach(function(q) { q.style.transition = 'opacity 0.15s'; q.style.opacity = '0'; });
-      }, 300);
+        setTimeout(function() {
+          invoice.classList.add('revealed');
+          intro.classList.add('gone');
+          document.body.style.cursor = 'crosshair';
+        }, 850);
 
-      setTimeout(function() {
-        var rect = core.getBoundingClientRect();
-        triggerBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
-        shockwave.classList.add('active');
-        flash.classList.add('active');
-        core.style.transition = 'transform 0.5s ease-out,opacity 0.4s ease-out';
-        core.style.transform = 'scale(0)'; core.style.opacity = '0';
-        orbits.forEach(function(o) { o.style.transition = 'opacity 0.35s'; o.style.opacity = '0'; });
-        pings.forEach(function(p) { p.style.transition = 'opacity 0.25s'; p.style.opacity = '0'; });
-        label.style.transition = 'opacity 0.4s,transform 0.4s';
-        label.style.opacity = '0'; label.style.transform = 'translateY(-15px)';
-      }, 500);
-
-      setTimeout(function() {
-        invoice.classList.add('revealed');
-        intro.classList.add('gone');
-        document.body.style.cursor = 'crosshair';
-      }, 1000);
-
-      setTimeout(function() {
-        toolbar.classList.add('visible');
-        intro.style.display = 'none';
-      }, 2000);
+        setTimeout(function() {
+          toolbar.classList.add('visible');
+          intro.style.display = 'none';
+        }, 1850);
+      }
     });
   })();
 
@@ -1107,7 +1148,7 @@
     });
   }
 
-  // ═══ SAVE HTML (with proton transition) ═══
+  // ═══ SAVE HTML (with guide transition) ═══
   function saveAsHtml() {
     recalc();
     var fn = 'HeartmindSpaces-' + (document.querySelector('.meta-value [contenteditable]').textContent || 'HMS-0001') + '.html';
