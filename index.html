@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HeartmindSpaces — Invoice (Proton Demo)</title>
+<title>HeartmindSpaces — Invoice (Proton × Restaurant at the End of the Universe)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
@@ -246,16 +246,12 @@
     margin-left: -2.5px;
   }
 
-  .orbit-1 {
-    animation: orbit-spin-1 7s linear infinite;
-  }
-
+  .orbit-1 { animation: orbit-spin-1 7s linear infinite; }
   .orbit-2 {
     width: 160px; height: 160px;
     margin-top: -80px; margin-left: -80px;
     animation: orbit-spin-2 9s linear infinite;
   }
-
   .orbit-3 {
     width: 185px; height: 185px;
     margin-top: -92.5px; margin-left: -92.5px;
@@ -645,6 +641,88 @@
   .corner-bl::after { bottom: -2px; left: -2px; }
   .corner-br::after { bottom: -2px; right: -2px; }
 
+  /* ─── RESTAURANT ICON (SVG drawn in CSS) ── */
+  .restaurant-icon {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
+  .restaurant-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 6px rgba(0,229,255,0.4)) drop-shadow(0 0 14px rgba(0,229,255,0.15));
+    animation: icon-breathe 4s ease-in-out infinite;
+  }
+
+  .restaurant-icon svg .icon-stroke {
+    fill: none;
+    stroke: var(--holo);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .restaurant-icon svg .icon-fill {
+    fill: var(--holo);
+    opacity: 0.15;
+  }
+
+  .restaurant-icon svg .icon-dot {
+    fill: var(--holo);
+  }
+
+  .restaurant-icon svg .icon-text {
+    fill: var(--holo);
+    font-family: var(--font-body);
+    font-size: 3.2px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    opacity: 0.7;
+  }
+
+  @keyframes icon-breathe {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(0,229,255,0.4)) drop-shadow(0 0 14px rgba(0,229,255,0.15)); }
+    50% { filter: drop-shadow(0 0 10px rgba(0,229,255,0.6)) drop-shadow(0 0 25px rgba(0,229,255,0.25)); }
+  }
+
+  /* "42" easter egg on hover */
+  .restaurant-icon .forty-two {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--holo-bright);
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    text-shadow: 0 0 10px rgba(0,229,255,0.6);
+    pointer-events: none;
+  }
+
+  .restaurant-icon:hover .forty-two {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px);
+  }
+
+  /* ─── DON'T PANIC WATERMARK ──────────────── */
+  .dont-panic {
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    font-family: var(--font-display);
+    font-size: 100px;
+    color: rgba(0,229,255,0.025);
+    pointer-events: none;
+    line-height: 1;
+    user-select: none;
+    letter-spacing: 2px;
+  }
+
   /* ─── HEADER ─────────────────────────────── */
   .header {
     display: flex;
@@ -657,30 +735,7 @@
     z-index: 10;
   }
 
-  .brand { display: flex; flex-direction: column; gap: 4px; }
-
-  .brand-icon {
-    width: 34px; height: 34px;
-    border: 1.5px solid var(--holo);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 8px;
-    box-shadow: 0 0 12px rgba(0,229,255,0.2);
-    animation: icon-pulse 3s ease-in-out infinite;
-  }
-
-  @keyframes icon-pulse {
-    0%, 100% { box-shadow: 0 0 12px rgba(0,229,255,0.2); }
-    50% { box-shadow: 0 0 20px rgba(0,229,255,0.4); }
-  }
-
-  .brand-icon::after {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--holo);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--holo);
-  }
+  .brand { display: flex; flex-direction: column; gap: 0; }
 
   .brand-name {
     font-family: var(--font-display);
@@ -1020,7 +1075,7 @@
     body { background: #fff; color: #111; cursor: auto; }
     .space, .toolbar, .add-row, #particleCanvas, #burstCanvas,
     .scan-bar, .chroma-edge, .glitch-layer, .emitter,
-    .beam, .hud-label, .proton-intro { display: none !important; }
+    .beam, .hud-label, .dont-panic, .proton-intro { display: none !important; }
     .invoice-container { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
     .holo-scene { perspective: none; padding: 0; min-height: auto; }
     .holo-wrap { animation: none !important; transform: none !important; }
@@ -1031,6 +1086,11 @@
     }
     .hologram::before, .hologram::after { display: none; }
     .corner { display: none; }
+    .restaurant-icon svg { filter: none; animation: none; }
+    .restaurant-icon svg .icon-stroke { stroke: #333; }
+    .restaurant-icon svg .icon-fill { fill: #333; opacity: 0.08; }
+    .restaurant-icon svg .icon-dot { fill: #333; }
+    .restaurant-icon .forty-two { display: none; }
     .brand-name, .party-name, .invoice-title h1 {
       color: #111 !important; text-shadow: none !important;
     }
@@ -1094,6 +1154,7 @@
         <div class="corner corner-tr"></div>
         <div class="corner corner-bl"></div>
         <div class="corner corner-br"></div>
+        <div class="dont-panic">Don't Panic</div>
 
         <!-- HUD readouts -->
         <div class="hud-label hud-tl">Invoice<br><span class="val" id="hudTime">00:00:00</span></div>
@@ -1104,7 +1165,47 @@
         <!-- ─── HEADER ───────────────────────────── -->
         <div class="header">
           <div class="brand">
-            <div class="brand-icon"></div>
+            <div class="restaurant-icon" title="The Restaurant at the End of the Universe">
+              <span class="forty-two">42</span>
+              <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer galaxy ring / plate rim -->
+                <ellipse cx="28" cy="30" rx="24" ry="10" class="icon-fill"/>
+                <ellipse cx="28" cy="30" rx="24" ry="10" class="icon-stroke"/>
+                <!-- Inner plate -->
+                <ellipse cx="28" cy="30" rx="15" ry="6" class="icon-stroke" style="stroke-dasharray: 2 3; opacity: 0.4;"/>
+                <!-- Fork (left of center) -->
+                <line x1="18" y1="8" x2="18" y2="26" class="icon-stroke"/>
+                <line x1="15" y1="8" x2="15" y2="14" class="icon-stroke" style="stroke-width:1;"/>
+                <line x1="18" y1="8" x2="18" y2="14" class="icon-stroke" style="stroke-width:1;"/>
+                <line x1="21" y1="8" x2="21" y2="14" class="icon-stroke" style="stroke-width:1;"/>
+                <path d="M15 14 Q18 17 21 14" class="icon-stroke" style="fill:none; stroke-width:1;"/>
+                <!-- Knife (right of center) -->
+                <line x1="38" y1="8" x2="38" y2="26" class="icon-stroke"/>
+                <path d="M38 8 Q42 12 38 18" class="icon-stroke" style="fill:none; stroke-width:1;"/>
+                <!-- Stars scattered around -->
+                <circle cx="8" cy="12" r="1" class="icon-dot"/>
+                <circle cx="48" cy="8" r="1.2" class="icon-dot"/>
+                <circle cx="50" cy="20" r="0.7" class="icon-dot"/>
+                <circle cx="6" cy="24" r="0.8" class="icon-dot"/>
+                <circle cx="28" cy="4" r="0.9" class="icon-dot"/>
+                <circle cx="44" cy="42" r="0.6" class="icon-dot"/>
+                <circle cx="12" cy="40" r="0.7" class="icon-dot"/>
+                <!-- Galaxy spiral hint on the plate -->
+                <path d="M25 29 Q28 27 31 29 Q29 31 26 30" class="icon-stroke" style="stroke-width:0.8; opacity:0.5;"/>
+                <!-- Tiny explosion / big bang burst at plate center -->
+                <circle cx="28" cy="30" r="1.5" class="icon-dot" style="opacity:0.6;"/>
+                <line x1="28" y1="27" x2="28" y2="25.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
+                <line x1="30.5" y1="28.5" x2="32" y2="27.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
+                <line x1="25.5" y1="28.5" x2="24" y2="27.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
+                <line x1="30" y1="31.5" x2="31.5" y2="33" class="icon-stroke" style="stroke-width:0.6; opacity:0.3;"/>
+                <line x1="26" y1="31.5" x2="24.5" y2="33" class="icon-stroke" style="stroke-width:0.6; opacity:0.3;"/>
+                <!-- "END OF UNIVERSE" micro text along bottom arc -->
+                <path id="arcPath" d="M10 44 Q28 52 46 44" fill="none" stroke="none"/>
+                <text class="icon-text">
+                  <textPath href="#arcPath" startOffset="50%" text-anchor="middle">End of Universe Dining</textPath>
+                </text>
+              </svg>
+            </div>
             <div class="brand-name">HeartmindSpaces</div>
           </div>
           <div class="invoice-title">
@@ -1367,7 +1468,7 @@
       });
     }
 
-    // Add radial streaks — fast bolts that clearly exit the viewport
+    // Radial streaks — fast bolts that exit the viewport
     for (var j = 0; j < 36; j++) {
       var a = (j / 36) * Math.PI * 2;
       particles.push({
@@ -1699,11 +1800,13 @@
     var glitchLayer = document.querySelector('.glitch-layer');
     var corners = document.querySelectorAll('.corner');
     var hudLabels = document.querySelectorAll('.hud-label');
+    var dontPanic = document.querySelector('.dont-panic');
 
     addBtns.forEach(function(b) { b.style.display = 'none'; });
     if (scanBar) scanBar.style.display = 'none';
     if (chromaEdge) chromaEdge.style.display = 'none';
     if (glitchLayer) glitchLayer.style.display = 'none';
+    if (dontPanic) dontPanic.style.display = 'none';
     corners.forEach(function(c) { c.style.display = 'none'; });
     hudLabels.forEach(function(h) { h.style.display = 'none'; });
 
@@ -1724,6 +1827,7 @@
       if (scanBar) scanBar.style.display = '';
       if (chromaEdge) chromaEdge.style.display = '';
       if (glitchLayer) glitchLayer.style.display = '';
+      if (dontPanic) dontPanic.style.display = '';
       corners.forEach(function(c) { c.style.display = ''; });
       hudLabels.forEach(function(h) { h.style.display = ''; });
       card.style.animation = '';
