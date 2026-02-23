@@ -2,30 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HeartmindSpaces — Invoice (Proton Demo)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>HeartmindSpaces — Invoice (Mobile × Restaurant at the End of the Universe)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
 <style>
-  /* ─── RESET ──────────────────────────────── */
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
     --void: #000004;
-    --deep: #020610;
     --holo: #00e5ff;
     --holo-dim: #007a8a;
     --holo-bright: #80f0ff;
-    --holo-white: #c0faff;
-    --blue: #0066dd;
-    --blue-dim: #003388;
-    --cyan-glow: rgba(0, 229, 255, 0.15);
-    --cyan-glow-strong: rgba(0, 229, 255, 0.35);
-    --grid-line: rgba(0, 229, 255, 0.04);
-    --scan-line: rgba(0, 229, 255, 0.03);
-    --surface: rgba(0, 30, 50, 0.55);
-    --surface-hover: rgba(0, 40, 65, 0.65);
     --border: rgba(0, 229, 255, 0.12);
     --border-bright: rgba(0, 229, 255, 0.35);
     --text: rgba(0, 229, 255, 0.85);
@@ -36,32 +25,30 @@
     --font-body: 'Cormorant Garamond', serif;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
   body {
     background: var(--void);
     color: var(--text);
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 14px;
     min-height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
     cursor: default;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* ─── DEEP SPACE ─────────────────────────── */
   .space {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    background:
-      radial-gradient(ellipse 160% 100% at 50% 30%, #030818 0%, #000004 70%);
+    position: fixed; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 160% 100% at 50% 30%, #030818 0%, #000004 70%);
   }
 
   .space::before {
     content: '';
-    position: absolute;
-    inset: -80%;
+    position: absolute; inset: -80%;
     background-image:
       radial-gradient(1px 1px at 12% 20%, rgba(100,180,255,0.8), transparent),
       radial-gradient(1.2px 1.2px at 28% 65%, rgba(255,255,255,0.5), transparent),
@@ -72,725 +59,381 @@
       radial-gradient(1px 1px at 55% 45%, rgba(100,180,255,0.35), transparent),
       radial-gradient(0.8px 0.8px at 92% 58%, rgba(255,255,255,0.3), transparent),
       radial-gradient(1.3px 1.3px at 38% 82%, rgba(80,160,255,0.4), transparent),
-      radial-gradient(0.7px 0.7px at 75% 15%, rgba(255,255,255,0.25), transparent),
-      radial-gradient(1px 1px at 18% 48%, rgba(100,180,255,0.3), transparent),
-      radial-gradient(0.9px 0.9px at 60% 92%, rgba(255,255,255,0.2), transparent),
-      radial-gradient(1.1px 1.1px at 95% 72%, rgba(80,160,255,0.25), transparent),
-      radial-gradient(0.5px 0.5px at 8% 32%, rgba(255,255,255,0.2), transparent),
-      radial-gradient(1.4px 1.4px at 42% 55%, rgba(100,180,255,0.2), transparent),
-      radial-gradient(0.7px 0.7px at 72% 8%, rgba(255,255,255,0.15), transparent);
-    background-size: 700px 700px;
+      radial-gradient(0.7px 0.7px at 75% 15%, rgba(255,255,255,0.25), transparent);
+    background-size: 500px 500px;
     animation: star-drift 300s linear infinite;
   }
 
   .space::after {
     content: '';
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 600px 500px at 20% 25%, rgba(0,40,120,0.1), transparent),
-      radial-gradient(ellipse 500px 700px at 80% 70%, rgba(0,20,80,0.07), transparent);
+      radial-gradient(ellipse 400px 350px at 20% 25%, rgba(0,40,120,0.1), transparent),
+      radial-gradient(ellipse 350px 500px at 80% 70%, rgba(0,20,80,0.07), transparent);
   }
 
-  @keyframes star-drift {
-    to { transform: translate(350px, 175px); }
-  }
+  @keyframes star-drift { to { transform: translate(250px, 125px); } }
 
-  /* ═══════════════════════════════════════════
-     PROTON INTRO OVERLAY
-     ═══════════════════════════════════════════ */
+  /* ═══ PROTON INTRO ═══════════════════════════ */
   .proton-intro {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: opacity 0.8s ease;
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: pointer; transition: opacity 0.8s ease;
   }
 
-  .proton-intro.gone {
-    opacity: 0;
-    pointer-events: none;
-  }
+  .proton-intro.gone { opacity: 0; pointer-events: none; }
 
-  /* ─── PROTON ASSEMBLY ─────────────────────── */
   .proton-assembly {
-    position: relative;
-    width: 240px;
-    height: 240px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 800px;
-    transform-style: preserve-3d;
+    position: relative; width: 200px; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    perspective: 800px; transform-style: preserve-3d;
   }
 
-  .proton-intro:hover .proton-assembly {
-    filter: brightness(1.15);
-  }
-
-  /* ─── NUCLEUS (glowing sphere) ────────────── */
   .proton-core {
-    position: absolute;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 38% 36%,
-      #ffffff 0%,
-      #c8f8ff 12%,
-      #00e5ff 35%,
-      rgba(0, 229, 255, 0.4) 60%,
-      transparent 100%
-    );
-    box-shadow:
-      0 0 20px rgba(0,229,255,0.9),
-      0 0 45px rgba(0,229,255,0.55),
-      0 0 90px rgba(0,229,255,0.3),
-      0 0 140px rgba(0,229,255,0.12),
-      inset 0 0 15px rgba(255,255,255,0.35);
+    position: absolute; width: 46px; height: 46px; border-radius: 50%;
+    background: radial-gradient(circle at 38% 36%, #ffffff 0%, #c8f8ff 12%, #00e5ff 35%, rgba(0,229,255,0.4) 60%, transparent 100%);
+    box-shadow: 0 0 20px rgba(0,229,255,0.9), 0 0 45px rgba(0,229,255,0.55), 0 0 80px rgba(0,229,255,0.3), inset 0 0 12px rgba(255,255,255,0.35);
     z-index: 10;
     animation: nucleus-breathe 3s ease-in-out infinite;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.2s ease, opacity 0.4s ease;
   }
 
   @keyframes nucleus-breathe {
-    0%, 100% {
-      transform: scale(1);
-      box-shadow: 0 0 20px rgba(0,229,255,0.9), 0 0 45px rgba(0,229,255,0.55), 0 0 90px rgba(0,229,255,0.3), 0 0 140px rgba(0,229,255,0.12);
-    }
-    50% {
-      transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(0,229,255,1), 0 0 65px rgba(0,229,255,0.65), 0 0 110px rgba(0,229,255,0.35), 0 0 160px rgba(0,229,255,0.15);
-    }
+    0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0,229,255,0.9), 0 0 45px rgba(0,229,255,0.55), 0 0 80px rgba(0,229,255,0.3); }
+    50% { transform: scale(1.08); box-shadow: 0 0 28px rgba(0,229,255,1), 0 0 55px rgba(0,229,255,0.65), 0 0 100px rgba(0,229,255,0.35); }
   }
 
-  .proton-intro:hover .proton-core {
-    animation: none;
-    transform: scale(1.12);
-    box-shadow: 0 0 35px rgba(0,229,255,1), 0 0 70px rgba(0,229,255,0.7), 0 0 120px rgba(0,229,255,0.4);
-  }
+  .quark { position: absolute; width: 6px; height: 6px; border-radius: 50%; z-index: 11; top: 50%; left: 50%; }
+  .quark-r { background: radial-gradient(circle, #ff6080 40%, transparent 100%); box-shadow: 0 0 5px #ff4060; animation: qp1 2.2s ease-in-out infinite; }
+  .quark-g { background: radial-gradient(circle, #60ff90 40%, transparent 100%); box-shadow: 0 0 5px #40ff70; animation: qp2 2.8s ease-in-out infinite; }
+  .quark-b { background: radial-gradient(circle, #6090ff 40%, transparent 100%); box-shadow: 0 0 5px #4070ff; animation: qp3 3.2s ease-in-out infinite; }
 
-  /* ─── QUARKS ──────────────────────────────── */
-  .quark {
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    z-index: 11;
-    top: 50%;
-    left: 50%;
-  }
+  @keyframes qp1 { 0%,100%{transform:translate(-8px,-3px)} 33%{transform:translate(5px,-7px)} 66%{transform:translate(3px,7px)} }
+  @keyframes qp2 { 0%,100%{transform:translate(7px,-5px)} 33%{transform:translate(-4px,6px)} 66%{transform:translate(-7px,-2px)} }
+  @keyframes qp3 { 0%,100%{transform:translate(0,8px)} 33%{transform:translate(7px,-2px)} 66%{transform:translate(-6px,-5px)} }
 
-  .quark-r {
-    background: radial-gradient(circle, #ff6080 40%, transparent 100%);
-    box-shadow: 0 0 6px #ff4060, 0 0 12px rgba(255,64,96,0.4);
-    animation: quark-path-1 2.2s ease-in-out infinite;
-  }
-
-  .quark-g {
-    background: radial-gradient(circle, #60ff90 40%, transparent 100%);
-    box-shadow: 0 0 6px #40ff70, 0 0 12px rgba(64,255,112,0.4);
-    animation: quark-path-2 2.8s ease-in-out infinite;
-  }
-
-  .quark-b {
-    background: radial-gradient(circle, #6090ff 40%, transparent 100%);
-    box-shadow: 0 0 6px #4070ff, 0 0 12px rgba(64,112,255,0.4);
-    animation: quark-path-3 3.2s ease-in-out infinite;
-  }
-
-  @keyframes quark-path-1 {
-    0%, 100% { transform: translate(-10px, -4px); }
-    33% { transform: translate(6px, -8px); }
-    66% { transform: translate(4px, 9px); }
-  }
-
-  @keyframes quark-path-2 {
-    0%, 100% { transform: translate(8px, -7px); }
-    33% { transform: translate(-5px, 8px); }
-    66% { transform: translate(-9px, -2px); }
-  }
-
-  @keyframes quark-path-3 {
-    0%, 100% { transform: translate(1px, 10px); }
-    33% { transform: translate(9px, -3px); }
-    66% { transform: translate(-7px, -6px); }
-  }
-
-  /* ─── ORBITAL RINGS ───────────────────────── */
   .orbit-ring {
-    position: absolute;
-    width: 170px;
-    height: 170px;
-    border: 1px solid rgba(0, 229, 255, 0.18);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    margin-top: -85px;
-    margin-left: -85px;
+    position: absolute; width: 140px; height: 140px;
+    border: 1px solid rgba(0,229,255,0.18); border-radius: 50%;
+    top: 50%; left: 50%; margin-top: -70px; margin-left: -70px;
     transition: border-color 0.3s ease, opacity 0.3s ease;
   }
 
   .orbit-ring .electron {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background: var(--holo-bright);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--holo), 0 0 18px rgba(0,229,255,0.5);
-    top: -2px;
-    left: 50%;
-    margin-left: -2.5px;
+    position: absolute; width: 4px; height: 4px;
+    background: var(--holo-bright); border-radius: 50%;
+    box-shadow: 0 0 6px var(--holo);
+    top: -2px; left: 50%; margin-left: -2px;
   }
 
-  .orbit-1 {
-    animation: orbit-spin-1 7s linear infinite;
-  }
+  .orbit-1 { animation: os1 7s linear infinite; }
+  .orbit-2 { width: 130px; height: 130px; margin-top: -65px; margin-left: -65px; animation: os2 9s linear infinite; }
 
-  .orbit-2 {
-    width: 160px; height: 160px;
-    margin-top: -80px; margin-left: -80px;
-    animation: orbit-spin-2 9s linear infinite;
-  }
+  @keyframes os1 { from{transform:rotateX(72deg) rotateZ(0)} to{transform:rotateX(72deg) rotateZ(360deg)} }
+  @keyframes os2 { from{transform:rotateX(72deg) rotateY(60deg) rotateZ(0)} to{transform:rotateX(72deg) rotateY(60deg) rotateZ(360deg)} }
 
-  .orbit-3 {
-    width: 185px; height: 185px;
-    margin-top: -92.5px; margin-left: -92.5px;
-    border-style: dashed;
-    border-color: rgba(0, 229, 255, 0.1);
-    animation: orbit-spin-3 12s linear infinite;
-  }
-
-  @keyframes orbit-spin-1 {
-    from { transform: rotateX(72deg) rotateZ(0deg); }
-    to   { transform: rotateX(72deg) rotateZ(360deg); }
-  }
-
-  @keyframes orbit-spin-2 {
-    from { transform: rotateX(72deg) rotateY(60deg) rotateZ(0deg); }
-    to   { transform: rotateX(72deg) rotateY(60deg) rotateZ(360deg); }
-  }
-
-  @keyframes orbit-spin-3 {
-    from { transform: rotateX(72deg) rotateY(120deg) rotateZ(0deg); }
-    to   { transform: rotateX(72deg) rotateY(120deg) rotateZ(360deg); }
-  }
-
-  .proton-intro:hover .orbit-ring {
-    border-color: rgba(0, 229, 255, 0.35);
-  }
-
-  /* ─── GLOW PINGS ──────────────────────────── */
   .glow-ping {
-    position: absolute;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 229, 255, 0.25);
-    top: 50%;
-    left: 50%;
-    margin-top: -26px;
-    margin-left: -26px;
-    animation: glow-ping-expand 4s ease-out infinite;
-    pointer-events: none;
-    z-index: 5;
+    position: absolute; width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid rgba(0,229,255,0.2);
+    top: 50%; left: 50%; margin-top: -23px; margin-left: -23px;
+    animation: gp 4s ease-out infinite;
+    pointer-events: none; z-index: 5;
   }
 
   .glow-ping:nth-child(2) { animation-delay: 1.33s; }
   .glow-ping:nth-child(3) { animation-delay: 2.66s; }
 
-  @keyframes glow-ping-expand {
-    0% { transform: scale(1); opacity: 0.5; }
-    100% { transform: scale(5.5); opacity: 0; }
-  }
+  @keyframes gp { 0%{transform:scale(1);opacity:0.4} 100%{transform:scale(4.5);opacity:0} }
 
-  /* ─── PROTON LABEL ────────────────────────── */
   .proton-label {
-    margin-top: 60px;
-    font-family: var(--font-display);
-    font-size: 24px;
-    color: rgba(0, 229, 255, 0.4);
-    letter-spacing: 2px;
-    text-shadow: 0 0 18px rgba(0,229,255,0.15);
+    margin-top: 48px;
+    font-family: var(--font-display); font-size: 20px;
+    color: rgba(0,229,255,0.4); letter-spacing: 2px;
+    text-shadow: 0 0 14px rgba(0,229,255,0.15);
     opacity: 0;
-    animation: label-materialize 1.2s ease-out 0.8s forwards, label-breathe 5s ease-in-out 2s infinite;
-    transition: color 0.3s ease, opacity 0.3s ease;
+    animation: lm 1.2s ease-out 0.8s forwards, lb 5s ease-in-out 2s infinite;
     user-select: none;
   }
 
-  .proton-intro:hover .proton-label {
-    color: rgba(0, 229, 255, 0.65);
-    text-shadow: 0 0 25px rgba(0,229,255,0.3);
-  }
-
-  @keyframes label-materialize {
-    from { opacity: 0; transform: translateY(12px); letter-spacing: 8px; }
-    to   { opacity: 1; transform: translateY(0); letter-spacing: 2px; }
-  }
-
-  @keyframes label-breathe {
-    0%, 100% { opacity: 0.65; }
-    50% { opacity: 1; text-shadow: 0 0 28px rgba(0,229,255,0.35); }
-  }
+  @keyframes lm { from{opacity:0;transform:translateY(10px);letter-spacing:6px} to{opacity:1;transform:translateY(0);letter-spacing:2px} }
+  @keyframes lb { 0%,100%{opacity:0.6} 50%{opacity:1;text-shadow:0 0 22px rgba(0,229,255,0.3)} }
 
   /* ─── BURST EFFECTS ───────────────────────── */
   .shockwave {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    border: 2px solid rgba(0, 229, 255, 0.7);
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    opacity: 0;
+    position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+    border-radius: 50%; border: 2px solid rgba(0,229,255,0.7);
+    transform: translate(-50%,-50%); pointer-events: none; opacity: 0;
   }
 
-  .shockwave.active {
-    animation: shockwave-expand 1s ease-out forwards;
-  }
+  .shockwave.active { animation: swe 1s ease-out forwards; }
 
-  @keyframes shockwave-expand {
-    0% { width: 0; height: 0; opacity: 1; border-width: 3px; }
-    60% { opacity: 0.5; }
-    100% { width: 200vmax; height: 200vmax; opacity: 0; border-width: 0.5px; }
-  }
+  @keyframes swe { 0%{width:0;height:0;opacity:1;border-width:3px} 60%{opacity:0.5} 100%{width:200vmax;height:200vmax;opacity:0;border-width:0.5px} }
 
   .screen-flash {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: radial-gradient(circle at 50% 50%, rgba(200,248,255,0.5), rgba(0,229,255,0.15), transparent 70%);
-    pointer-events: none;
-    opacity: 0;
-    z-index: 250;
+    pointer-events: none; opacity: 0; z-index: 250;
   }
 
-  .screen-flash.active {
-    animation: screen-flash-go 0.6s ease-out forwards;
-  }
+  .screen-flash.active { animation: sf 0.6s ease-out forwards; }
+  @keyframes sf { 0%{opacity:1} 100%{opacity:0} }
 
-  @keyframes screen-flash-go {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-  }
+  #burstCanvas { position: fixed; inset: 0; z-index: 210; pointer-events: none; display: none; }
 
-  #burstCanvas {
-    position: fixed;
-    inset: 0;
-    z-index: 210;
-    pointer-events: none;
-    display: none;
-  }
-
-  /* ═══════════════════════════════════════════
-     INVOICE CONTAINER (hidden until reveal)
-     ═══════════════════════════════════════════ */
+  /* ═══ INVOICE CONTAINER ═══════════════════════ */
   .invoice-container {
-    opacity: 0;
-    transform: scale(0.88);
-    transition: opacity 1s ease-out, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0; transform: scale(0.88);
+    transition: opacity 1s ease-out, transform 1s cubic-bezier(0.22,1,0.36,1);
     pointer-events: none;
   }
 
-  .invoice-container.revealed {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-  }
+  .invoice-container.revealed { opacity: 1; transform: scale(1); pointer-events: auto; }
 
-  /* ─── HOLOGRAM SCENE ─────────────────────── */
   .holo-scene {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    perspective: 1400px;
-    perspective-origin: 50% 60%;
-    padding: 80px 20px 180px;
+    position: relative; z-index: 1; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    perspective: 1200px; perspective-origin: 50% 60%;
+    padding: 60px 12px 140px;
   }
 
-  /* ─── PROJECTION BASE (EMITTER) ──────────── */
-  .emitter {
-    position: relative;
-    width: 500px;
-    height: 18px;
-    margin-top: 30px;
-    z-index: 5;
-  }
+  /* ─── EMITTER ─────────────────────────────── */
+  .emitter { position: relative; width: 100%; max-width: 400px; height: 14px; margin-top: 20px; z-index: 5; }
 
   .emitter-body {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 320px;
-    height: 12px;
-    background: linear-gradient(180deg, #0a2030 0%, #051018 100%);
-    border: 1px solid rgba(0,229,255,0.15);
-    border-radius: 6px;
-    box-shadow:
-      0 0 20px rgba(0,229,255,0.1),
-      0 0 60px rgba(0,229,255,0.05),
-      inset 0 1px 0 rgba(0,229,255,0.1);
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 10px;
+    background: linear-gradient(180deg, #0a2030, #051018);
+    border: 1px solid rgba(0,229,255,0.15); border-radius: 5px;
+    box-shadow: 0 0 16px rgba(0,229,255,0.08);
   }
 
   .emitter-core {
-    position: absolute;
-    bottom: 3px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: var(--holo);
-    border-radius: 2px;
-    box-shadow:
-      0 0 8px var(--holo),
-      0 0 20px rgba(0,229,255,0.5),
-      0 0 40px rgba(0,229,255,0.25);
-    animation: emitter-pulse 2s ease-in-out infinite;
+    position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 3px; background: var(--holo); border-radius: 2px;
+    box-shadow: 0 0 8px var(--holo), 0 0 20px rgba(0,229,255,0.4);
+    animation: ep 2s ease-in-out infinite;
   }
 
   .emitter-ring {
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 140px;
-    height: 8px;
-    border: 1px solid rgba(0,229,255,0.08);
-    border-radius: 50%;
-    animation: ring-expand 3s ease-out infinite;
+    position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 6px;
+    border: 1px solid rgba(0,229,255,0.06); border-radius: 50%;
+    animation: re 3s ease-out infinite;
   }
 
   .emitter-ring:nth-child(3) { animation-delay: 1s; }
   .emitter-ring:nth-child(4) { animation-delay: 2s; }
 
-  @keyframes emitter-pulse {
-    0%, 100% { opacity: 0.8; box-shadow: 0 0 8px var(--holo), 0 0 20px rgba(0,229,255,0.5); }
-    50% { opacity: 1; box-shadow: 0 0 12px var(--holo), 0 0 30px rgba(0,229,255,0.6), 0 0 60px rgba(0,229,255,0.3); }
-  }
+  @keyframes ep { 0%,100%{opacity:0.8} 50%{opacity:1;box-shadow:0 0 12px var(--holo),0 0 28px rgba(0,229,255,0.5)} }
+  @keyframes re { 0%{width:60px;opacity:0.3} 100%{width:300px;opacity:0} }
 
-  @keyframes ring-expand {
-    0% { width: 80px; opacity: 0.4; }
-    100% { width: 400px; opacity: 0; }
-  }
-
-  /* ─── PROJECTION BEAM ────────────────────── */
   .beam {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
     width: 0; height: 0;
-    border-left: 420px solid transparent;
-    border-right: 420px solid transparent;
-    border-bottom: 900px solid rgba(0,229,255,0.012);
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(1px);
+    border-left: 300px solid transparent; border-right: 300px solid transparent;
+    border-bottom: 700px solid rgba(0,229,255,0.01);
+    pointer-events: none; filter: blur(1px);
   }
 
-  .beam::before {
-    content: '';
-    position: absolute;
-    bottom: -900px;
-    left: -280px;
-    width: 0; height: 0;
-    border-left: 280px solid transparent;
-    border-right: 280px solid transparent;
-    border-bottom: 900px solid rgba(0,229,255,0.018);
-    filter: blur(3px);
-  }
-
-  /* ─── HOLOGRAM CARD WRAPPER ──────────────── */
+  /* ─── HOLOGRAM CARD ────────────────────────── */
   .holo-wrap {
-    transform-style: preserve-3d;
-    max-width: 860px;
-    width: 100%;
-    animation: holo-float 10s ease-in-out infinite;
-    will-change: transform;
-    transition: transform 0.12s ease-out;
-    position: relative;
+    transform-style: preserve-3d; width: 100%; max-width: 860px;
+    animation: hf 10s ease-in-out infinite; will-change: transform; position: relative;
   }
 
-  @keyframes holo-float {
-    0%, 100% { transform: translateY(0px) rotateX(2deg) rotateY(0deg); }
-    25%      { transform: translateY(-8px) rotateX(1.5deg) rotateY(0.8deg); }
-    50%      { transform: translateY(-4px) rotateX(2.5deg) rotateY(-0.5deg); }
-    75%      { transform: translateY(-10px) rotateX(1.8deg) rotateY(0.3deg); }
-  }
+  @keyframes hf { 0%,100%{transform:translateY(0) rotateX(1.5deg)} 50%{transform:translateY(-6px) rotateX(2deg)} }
 
-  /* ─── THE HOLOGRAM SURFACE ───────────────── */
   .hologram {
     position: relative;
-    background: rgba(0, 20, 40, 0.45);
+    background: rgba(0,20,40,0.45);
     border: 1px solid var(--border-bright);
-    padding: 52px 58px;
+    padding: 32px 20px;
     overflow: hidden;
     backdrop-filter: blur(2px);
-    box-shadow:
-      0 0 30px rgba(0,229,255,0.08),
-      0 0 60px rgba(0,229,255,0.04),
-      0 0 120px rgba(0,229,255,0.02),
-      inset 0 0 80px rgba(0,229,255,0.03);
-    animation: holo-flicker 0.15s steps(2) infinite;
+    box-shadow: 0 0 24px rgba(0,229,255,0.08), 0 0 50px rgba(0,229,255,0.03), inset 0 0 50px rgba(0,229,255,0.02);
+    animation: hfl 0.15s steps(2) infinite;
   }
 
-  /* Scan lines */
   .hologram::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      180deg,
-      transparent 0px, transparent 2px,
-      rgba(0,229,255,0.015) 2px, rgba(0,229,255,0.015) 4px
-    );
-    pointer-events: none;
-    z-index: 60;
-    animation: scan-scroll 8s linear infinite;
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(180deg, transparent 0px, transparent 2px, rgba(0,229,255,0.012) 2px, rgba(0,229,255,0.012) 4px);
+    pointer-events: none; z-index: 60;
+    animation: ss 8s linear infinite;
   }
 
-  @keyframes scan-scroll { to { transform: translateY(4px); } }
+  @keyframes ss { to { transform: translateY(4px); } }
 
-  /* Grid overlay */
   .hologram::after {
-    content: '';
-    position: absolute;
-    inset: 0;
+    content: ''; position: absolute; inset: 0;
     background:
-      repeating-linear-gradient(90deg, rgba(0,229,255,0.02) 0px, transparent 1px, transparent 60px),
-      repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, transparent 1px, transparent 60px);
-    pointer-events: none;
-    z-index: 59;
+      repeating-linear-gradient(90deg, rgba(0,229,255,0.015) 0px, transparent 1px, transparent 50px),
+      repeating-linear-gradient(0deg, rgba(0,229,255,0.015) 0px, transparent 1px, transparent 50px);
+    pointer-events: none; z-index: 59;
   }
 
-  @keyframes holo-flicker {
-    0% { opacity: 1; } 50% { opacity: 0.985; } 51% { opacity: 1; } 100% { opacity: 0.99; }
-  }
+  @keyframes hfl { 0%{opacity:1} 50%{opacity:0.985} 51%{opacity:1} 100%{opacity:0.99} }
 
   .scan-bar {
-    position: absolute;
-    left: 0; right: 0;
-    height: 60px;
-    background: linear-gradient(180deg, transparent 0%, rgba(0,229,255,0.06) 40%, rgba(0,229,255,0.06) 60%, transparent 100%);
-    pointer-events: none;
-    z-index: 61;
-    animation: scan-sweep 6s ease-in-out infinite;
+    position: absolute; left: 0; right: 0; height: 50px;
+    background: linear-gradient(180deg, transparent, rgba(0,229,255,0.05) 40%, rgba(0,229,255,0.05) 60%, transparent);
+    pointer-events: none; z-index: 61; animation: ssw 6s ease-in-out infinite;
   }
 
-  @keyframes scan-sweep { 0%, 100% { top: -60px; } 50% { top: 100%; } }
+  @keyframes ssw { 0%,100%{top:-50px} 50%{top:100%} }
 
   .chroma-edge {
-    position: absolute;
-    inset: -2px;
-    pointer-events: none;
-    z-index: 62;
-    box-shadow: inset 2px 0 0 rgba(255,0,80,0.06), inset -2px 0 0 rgba(0,100,255,0.06);
-    animation: chroma-shift 4s ease-in-out infinite;
-  }
-
-  @keyframes chroma-shift {
-    0%, 100% { box-shadow: inset 2px 0 0 rgba(255,0,80,0.06), inset -2px 0 0 rgba(0,100,255,0.06); }
-    50% { box-shadow: inset 1px 0 0 rgba(255,0,80,0.1), inset -1px 0 0 rgba(0,100,255,0.1); }
+    position: absolute; inset: -2px; pointer-events: none; z-index: 62;
+    box-shadow: inset 2px 0 0 rgba(255,0,80,0.05), inset -2px 0 0 rgba(0,100,255,0.05);
   }
 
   .glitch-layer {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 63;
-    opacity: 0;
-    animation: glitch-trigger 8s ease-in-out infinite;
+    position: absolute; inset: 0; pointer-events: none; z-index: 63;
+    opacity: 0; animation: gt 10s ease-in-out infinite;
   }
 
-  @keyframes glitch-trigger {
-    0%, 94%, 100% { opacity: 0; transform: none; }
-    95% { opacity: 1; transform: translateX(3px) skewX(-1deg); clip-path: inset(20% 0 60% 0); }
-    96% { opacity: 0.8; transform: translateX(-2px) skewX(0.5deg); clip-path: inset(50% 0 20% 0); }
-    97% { opacity: 0; transform: none; }
+  @keyframes gt {
+    0%,94%,100% { opacity:0;transform:none }
+    95% { opacity:0.8;transform:translateX(2px) skewX(-0.5deg);clip-path:inset(25% 0 55% 0) }
+    96% { opacity:0;transform:none }
   }
 
-  .glitch-layer::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0,229,255,0.08);
-    mix-blend-mode: overlay;
+  .glitch-layer::before { content:''; position:absolute; inset:0; background:rgba(0,229,255,0.06); mix-blend-mode:overlay; }
+
+  .corner { position: absolute; width: 16px; height: 16px; z-index: 64; }
+  .corner-tl { top:-1px;left:-1px;border-top:2px solid var(--holo);border-left:2px solid var(--holo); }
+  .corner-tr { top:-1px;right:-1px;border-top:2px solid var(--holo);border-right:2px solid var(--holo); }
+  .corner-bl { bottom:-1px;left:-1px;border-bottom:2px solid var(--holo);border-left:2px solid var(--holo); }
+  .corner-br { bottom:-1px;right:-1px;border-bottom:2px solid var(--holo);border-right:2px solid var(--holo); }
+
+  .corner::after { content:''; position:absolute; width:3px; height:3px; background:var(--holo); box-shadow:0 0 5px var(--holo); }
+  .corner-tl::after{top:-1px;left:-1px} .corner-tr::after{top:-1px;right:-1px}
+  .corner-bl::after{bottom:-1px;left:-1px} .corner-br::after{bottom:-1px;right:-1px}
+
+  /* ─── RESTAURANT ICON ────────────────────── */
+  .restaurant-icon {
+    position: relative;
+    width: 48px; height: 48px;
+    margin-bottom: 8px;
+    cursor: pointer;
   }
 
-  .corner { position: absolute; width: 20px; height: 20px; z-index: 64; }
-  .corner-tl { top: -1px; left: -1px; border-top: 2px solid var(--holo); border-left: 2px solid var(--holo); }
-  .corner-tr { top: -1px; right: -1px; border-top: 2px solid var(--holo); border-right: 2px solid var(--holo); }
-  .corner-bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--holo); border-left: 2px solid var(--holo); }
-  .corner-br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--holo); border-right: 2px solid var(--holo); }
-
-  .corner::after {
-    content: '';
-    position: absolute;
-    width: 4px; height: 4px;
-    background: var(--holo);
-    box-shadow: 0 0 6px var(--holo);
+  .restaurant-icon svg {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 0 5px rgba(0,229,255,0.35)) drop-shadow(0 0 12px rgba(0,229,255,0.12));
+    animation: ib 4s ease-in-out infinite;
   }
 
-  .corner-tl::after { top: -2px; left: -2px; }
-  .corner-tr::after { top: -2px; right: -2px; }
-  .corner-bl::after { bottom: -2px; left: -2px; }
-  .corner-br::after { bottom: -2px; right: -2px; }
+  .restaurant-icon svg .icon-stroke { fill: none; stroke: var(--holo); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+  .restaurant-icon svg .icon-fill { fill: var(--holo); opacity: 0.15; }
+  .restaurant-icon svg .icon-dot { fill: var(--holo); }
+  .restaurant-icon svg .icon-text { fill: var(--holo); font-family: var(--font-body); font-size: 3.2px; letter-spacing: 0.4px; text-transform: uppercase; font-weight: 600; opacity: 0.7; }
+
+  @keyframes ib {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(0,229,255,0.35)) drop-shadow(0 0 12px rgba(0,229,255,0.12)); }
+    50% { filter: drop-shadow(0 0 8px rgba(0,229,255,0.5)) drop-shadow(0 0 20px rgba(0,229,255,0.2)); }
+  }
+
+  .restaurant-icon .forty-two {
+    position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-display); font-size: 12px; color: var(--holo-bright);
+    opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
+    text-shadow: 0 0 8px rgba(0,229,255,0.5); pointer-events: none;
+  }
+
+  .restaurant-icon:hover .forty-two { opacity: 1; transform: translateX(-50%) translateY(-3px); }
+
+  /* ─── DON'T PANIC WATERMARK ──────────────── */
+  .dont-panic {
+    position: absolute; bottom: -4px; right: -4px;
+    font-family: var(--font-display); font-size: 60px;
+    color: rgba(0,229,255,0.02); pointer-events: none;
+    line-height: 1; user-select: none; letter-spacing: 1px;
+  }
 
   /* ─── HEADER ─────────────────────────────── */
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 40px;
-    padding-bottom: 28px;
+    display: flex; flex-direction: column; gap: 16px;
+    margin-bottom: 28px; padding-bottom: 20px;
     border-bottom: 1px solid var(--border);
-    position: relative;
-    z-index: 10;
+    position: relative; z-index: 10;
   }
 
-  .brand { display: flex; flex-direction: column; gap: 4px; }
-
-  .brand-icon {
-    width: 34px; height: 34px;
-    border: 1.5px solid var(--holo);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 8px;
-    box-shadow: 0 0 12px rgba(0,229,255,0.2);
-    animation: icon-pulse 3s ease-in-out infinite;
-  }
-
-  @keyframes icon-pulse {
-    0%, 100% { box-shadow: 0 0 12px rgba(0,229,255,0.2); }
-    50% { box-shadow: 0 0 20px rgba(0,229,255,0.4); }
-  }
-
-  .brand-icon::after {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--holo);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--holo);
-  }
+  .brand { display: flex; flex-direction: column; gap: 0; }
 
   .brand-name {
-    font-family: var(--font-display);
-    font-weight: 400; font-size: 34px;
-    letter-spacing: 1px; color: var(--holo);
-    line-height: 1.1;
-    text-shadow: 0 0 12px rgba(0,229,255,0.45), 0 0 35px rgba(0,229,255,0.18);
+    font-family: var(--font-display); font-size: 28px; color: var(--holo);
+    line-height: 1.1; letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(0,229,255,0.4);
   }
 
-  .invoice-title { text-align: right; }
+  .invoice-title { text-align: left; }
 
   .invoice-title h1 {
-    font-family: var(--font-display);
-    font-weight: 400; font-size: 52px;
-    letter-spacing: 2px; color: var(--holo-bright);
-    line-height: 1; margin-bottom: 12px;
-    text-shadow: 0 0 18px rgba(0,229,255,0.5), 0 0 45px rgba(0,229,255,0.2),
-      2px 0 0 rgba(255,0,80,0.06), -2px 0 0 rgba(0,100,255,0.06);
+    font-family: var(--font-display); font-size: 38px; color: var(--holo-bright);
+    line-height: 1; margin-bottom: 8px; letter-spacing: 1px;
+    text-shadow: 0 0 14px rgba(0,229,255,0.45);
   }
 
   /* ─── EDITABLE FIELDS ────────────────────── */
   [contenteditable] {
     outline: none;
     border-bottom: 1px dashed rgba(0,229,255,0.2);
-    padding: 2px 4px; margin: -2px -4px;
+    padding: 4px 6px; margin: -4px -6px;
     transition: all 0.2s ease;
     min-width: 40px; display: inline-block;
-    color: var(--text);
-  }
-
-  [contenteditable]:hover {
-    border-bottom-color: rgba(0,229,255,0.4);
-    background: rgba(0,229,255,0.04);
+    color: var(--text); min-height: 28px;
   }
 
   [contenteditable]:focus {
     border-bottom-color: var(--holo);
     background: rgba(0,229,255,0.08);
-    box-shadow: 0 2px 12px rgba(0,229,255,0.1);
-    text-shadow: 0 0 6px rgba(0,229,255,0.3);
+    box-shadow: 0 2px 10px rgba(0,229,255,0.1);
   }
 
-  [contenteditable]:empty::before {
-    content: attr(data-placeholder);
-    color: var(--text-dim); font-style: italic;
-  }
+  [contenteditable]:empty::before { content: attr(data-placeholder); color: var(--text-dim); font-style: italic; }
 
   /* ─── META ROW ───────────────────────────── */
-  .meta-row {
-    display: flex; justify-content: flex-end;
-    gap: 36px; margin-bottom: 36px;
-    position: relative; z-index: 10;
-  }
-
-  .meta-item { text-align: right; }
-
-  .meta-label {
-    font-family: var(--font-body);
-    font-size: 10px; letter-spacing: 2.5px;
-    text-transform: uppercase; color: var(--text-label);
-    margin-bottom: 4px; font-weight: 600;
-  }
-
-  .meta-value { font-size: 15px; color: var(--text-bright); font-weight: 600; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; position: relative; z-index: 10; }
+  .meta-item { text-align: left; flex: 1; min-width: 100px; }
+  .meta-label { font-family: var(--font-body); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-label); margin-bottom: 3px; font-weight: 600; }
+  .meta-value { font-size: 14px; color: var(--text-bright); font-weight: 600; }
 
   /* ─── PARTIES ──────────────────────────────── */
   .parties {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 48px; margin-bottom: 40px;
-    padding-bottom: 32px;
+    display: grid; grid-template-columns: 1fr; gap: 24px;
+    margin-bottom: 28px; padding-bottom: 24px;
     border-bottom: 1px solid var(--border);
     position: relative; z-index: 10;
   }
 
   .party-label {
-    font-family: var(--font-body);
-    font-size: 10px; letter-spacing: 2.5px;
+    font-family: var(--font-body); font-size: 9px; letter-spacing: 2px;
     text-transform: uppercase; color: var(--text-label);
-    margin-bottom: 12px; font-weight: 600;
-    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 8px; font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
   }
 
-  .party-label::before {
-    content: '';
-    width: 16px; height: 1px;
-    background: var(--holo-dim);
-    box-shadow: 0 0 4px var(--holo-dim);
-  }
+  .party-label::before { content:''; width:12px; height:1px; background:var(--holo-dim); box-shadow:0 0 3px var(--holo-dim); }
 
   .party-name {
-    font-family: var(--font-display);
-    font-size: 26px; font-weight: 400;
-    color: var(--holo); margin-bottom: 6px;
-    letter-spacing: 0.5px;
-    text-shadow: 0 0 10px rgba(0,229,255,0.25);
+    font-family: var(--font-display); font-size: 22px; color: var(--holo);
+    margin-bottom: 4px; letter-spacing: 0.5px;
+    text-shadow: 0 0 8px rgba(0,229,255,0.2);
   }
 
-  .party-details { line-height: 1.9; color: var(--text); font-size: 13px; }
+  .party-details { line-height: 1.8; color: var(--text); font-size: 12px; }
   .party-details [contenteditable] { display: block; width: 100%; }
 
   /* ─── LINE ITEMS TABLE ───────────────────── */
-  .line-items { margin-bottom: 32px; position: relative; z-index: 10; }
-  .items-table { width: 100%; border-collapse: collapse; }
+  .line-items { margin-bottom: 24px; position: relative; z-index: 10; overflow-x: auto; }
+  .items-table { width: 100%; border-collapse: collapse; min-width: 380px; }
 
   .items-table thead th {
-    font-family: var(--font-body);
-    font-size: 10px; letter-spacing: 2.5px;
+    font-family: var(--font-body); font-size: 9px; letter-spacing: 2px;
     text-transform: uppercase; color: var(--text-label);
     font-weight: 600; text-align: left;
-    padding: 0 12px 14px 12px;
+    padding: 0 8px 10px; white-space: nowrap;
     border-bottom: 1px solid var(--border-bright);
   }
 
@@ -798,248 +441,168 @@
   .items-table thead th:nth-child(3),
   .items-table thead th:nth-child(4) { text-align: right; }
 
-  .items-table tbody td {
-    padding: 16px 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-  }
-
-  .items-table tbody tr:hover { background: rgba(0,229,255,0.03); }
+  .items-table tbody td { padding: 12px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
 
   .items-table tbody td:nth-child(2),
   .items-table tbody td:nth-child(3),
-  .items-table tbody td:nth-child(4) {
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-  }
+  .items-table tbody td:nth-child(4) { text-align: right; font-variant-numeric: tabular-nums; }
 
-  .item-desc { color: var(--text-bright); font-size: 15px; }
-  .item-subdesc { color: var(--text-dim); font-size: 12px; margin-top: 3px; }
+  .item-desc { color: var(--text-bright); font-size: 13px; }
+  .item-subdesc { color: var(--text-dim); font-size: 11px; margin-top: 2px; }
 
   .add-row {
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 12px; color: var(--text-dim);
-    font-family: var(--font-body);
-    font-size: 11px; letter-spacing: 2px;
+    display: flex; align-items: center; gap: 6px;
+    padding: 12px 10px; color: var(--text-dim);
+    font-family: var(--font-body); font-size: 11px; letter-spacing: 1.5px;
     text-transform: uppercase; cursor: pointer;
-    border: 1px dashed rgba(0,229,255,0.12);
+    border: 1px dashed rgba(0,229,255,0.1);
     background: transparent; width: 100%;
     transition: all 0.2s ease;
-    margin-top: 4px; font-weight: 600;
-  }
-
-  .add-row:hover {
-    border-color: var(--holo); color: var(--holo);
-    background: rgba(0,229,255,0.04);
-    box-shadow: 0 0 12px rgba(0,229,255,0.06);
+    margin-top: 4px; font-weight: 600; min-height: 44px;
   }
 
   .add-row span { font-size: 16px; line-height: 1; }
 
   /* ─── TOTALS ─────────────────────────────── */
-  .totals-section {
-    display: flex; justify-content: flex-end;
-    margin-bottom: 40px; position: relative; z-index: 10;
-  }
+  .totals-section { display: flex; justify-content: flex-end; margin-bottom: 28px; position: relative; z-index: 10; }
+  .totals { width: 100%; max-width: 300px; }
 
-  .totals { width: 300px; }
-
-  .total-row {
-    display: flex; justify-content: space-between;
-    padding: 10px 0; border-bottom: 1px solid var(--border);
-    align-items: center;
-  }
-
-  .total-row:last-child {
-    border-bottom: none; padding-top: 16px; margin-top: 4px;
-    border-top: 1px solid var(--border-bright);
-  }
-
-  .total-label {
-    font-family: var(--font-body);
-    font-size: 11px; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--text-dim);
-    font-weight: 600;
-  }
-
-  .total-row:last-child .total-label {
-    color: var(--text-label);
-    font-size: 12px; letter-spacing: 2.5px;
-  }
-
-  .total-value {
-    font-weight: 700;
-    color: var(--text-bright);
-    font-variant-numeric: tabular-nums;
-  }
+  .total-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); align-items: center; }
+  .total-row:last-child { border-bottom: none; padding-top: 12px; margin-top: 4px; border-top: 1px solid var(--border-bright); }
+  .total-label { font-family: var(--font-body); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); font-weight: 600; }
+  .total-row:last-child .total-label { color: var(--text-label); font-size: 11px; }
+  .total-value { font-weight: 700; color: var(--text-bright); font-variant-numeric: tabular-nums; }
 
   .total-row:last-child .total-value {
-    font-family: var(--font-display);
-    font-size: 28px; font-weight: 400;
-    color: var(--holo-bright);
-    letter-spacing: 1px;
-    text-shadow: 0 0 14px rgba(0,229,255,0.45), 0 0 35px rgba(0,229,255,0.18);
+    font-family: var(--font-display); font-size: 24px; color: var(--holo-bright);
+    text-shadow: 0 0 12px rgba(0,229,255,0.4);
   }
 
   /* ─── FOOTER ─────────────────────────────── */
   .footer {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 48px; padding-top: 28px;
-    border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr; gap: 20px;
+    padding-top: 20px; border-top: 1px solid var(--border);
     position: relative; z-index: 10;
   }
 
-  .footer-section-label {
-    font-family: var(--font-body);
-    font-size: 10px; letter-spacing: 2.5px;
-    text-transform: uppercase; color: var(--text-label);
-    margin-bottom: 10px; font-weight: 600;
-  }
-
-  .footer-content { font-size: 13px; line-height: 1.8; color: var(--text); }
+  .footer-section-label { font-family: var(--font-body); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-label); margin-bottom: 6px; font-weight: 600; }
+  .footer-content { font-size: 12px; line-height: 1.7; color: var(--text); }
 
   /* ─── STATUS BADGE ─────────────────────────── */
   .status-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 4px 14px;
-    border: 1px solid var(--holo-dim);
-    font-family: var(--font-body);
-    font-size: 10px; letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--holo-dim);
-    font-weight: 600; cursor: pointer;
-    margin-top: 4px;
-    transition: all 0.2s ease;
+    padding: 6px 16px; border: 1px solid var(--holo-dim);
+    font-family: var(--font-body); font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--holo-dim);
+    font-weight: 600; cursor: pointer; margin-top: 4px;
+    transition: all 0.2s ease; min-height: 36px;
   }
 
-  .status-badge:hover {
-    border-color: var(--holo); color: var(--holo);
-    box-shadow: 0 0 10px rgba(0,229,255,0.15);
-  }
-
-  .status-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: var(--holo-dim);
-    box-shadow: 0 0 6px rgba(0,229,255,0.4);
-    animation: pulse-dot 2s ease-in-out infinite;
-  }
-
+  .status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--holo-dim); box-shadow: 0 0 5px rgba(0,229,255,0.4); animation: pd 2s ease-in-out infinite; }
   .status-badge.paid { border-color: #00cc66; color: #00cc66; }
-  .status-badge.paid .status-dot {
-    background: #00cc66;
-    box-shadow: 0 0 6px rgba(0,204,102,0.4);
-  }
+  .status-badge.paid .status-dot { background: #00cc66; box-shadow: 0 0 5px rgba(0,204,102,0.4); }
 
-  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes pd { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  /* ─── HUD READOUT ────────────────────────── */
+  /* ─── HUD (simplified) ──────────────────── */
   .hud-label {
-    position: absolute;
-    font-family: var(--font-body);
-    font-size: 9px; letter-spacing: 2px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    z-index: 65;
-    pointer-events: none;
-    font-weight: 600;
+    position: absolute; font-family: var(--font-body);
+    font-size: 8px; letter-spacing: 1.5px; color: var(--text-dim);
+    text-transform: uppercase; z-index: 65; pointer-events: none; font-weight: 600;
   }
 
-  .hud-tl { top: 14px; left: 18px; }
-  .hud-tr { top: 14px; right: 18px; text-align: right; }
-  .hud-bl { bottom: 14px; left: 18px; }
-  .hud-br { bottom: 14px; right: 18px; text-align: right; }
+  .hud-tl { top: 10px; left: 12px; } .hud-tr { top: 10px; right: 12px; text-align: right; }
+  .hud-bl { bottom: 10px; left: 12px; } .hud-br { bottom: 10px; right: 12px; text-align: right; }
+  .hud-label .val { color: var(--holo-dim); font-size: 10px; letter-spacing: 0.5px; font-style: italic; }
 
-  .hud-label .val {
-    color: var(--holo-dim);
-    font-family: var(--font-body);
-    font-size: 11px; letter-spacing: 1px;
-    font-weight: 400; font-style: italic;
-  }
-
-  /* ─── PARTICLES (canvas) ─────────────────── */
-  #particleCanvas {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-  }
+  #particleCanvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
 
   /* ─── TOOLBAR ────────────────────────────── */
   .toolbar {
-    position: fixed; bottom: 24px; left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    display: flex; gap: 2px;
-    background: rgba(0,8,20,0.9);
-    border: 1px solid rgba(0,229,255,0.1);
-    padding: 4px;
-    z-index: 100;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 30px rgba(0,229,255,0.03);
-    backdrop-filter: blur(12px);
-    opacity: 0;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 1px;
+    background: rgba(0,8,20,0.95);
+    border-top: 1px solid rgba(0,229,255,0.1);
+    padding: 6px 4px; padding-bottom: calc(6px + env(safe-area-inset-bottom));
+    z-index: 100; backdrop-filter: blur(12px);
+    opacity: 0; transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
     pointer-events: none;
   }
 
-  .toolbar.visible {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
-  }
+  .toolbar.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
   .toolbar button {
-    font-family: var(--font-body);
-    font-size: 12px; letter-spacing: 1.5px;
-    text-transform: uppercase; padding: 8px 18px;
+    font-family: var(--font-body); font-size: 11px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 10px 14px;
     background: transparent; border: none;
-    color: rgba(0,229,255,0.35);
-    cursor: pointer; transition: all 0.15s ease;
-    font-weight: 600;
+    color: rgba(0,229,255,0.35); cursor: pointer;
+    transition: all 0.15s ease; font-weight: 600; min-height: 44px;
   }
 
-  .toolbar button:hover {
-    color: var(--holo);
-    background: rgba(0,229,255,0.06);
-    text-shadow: 0 0 8px rgba(0,229,255,0.3);
+  .toolbar button:active { color: var(--holo); background: rgba(0,229,255,0.08); }
+  .toolbar button.primary-action { color: var(--holo); border: 1px solid rgba(0,229,255,0.2); }
+  .toolbar .sep { width: 1px; background: rgba(0,229,255,0.06); margin: 6px 1px; }
+
+  /* ─── RESPONSIVE ─────────────────────────── */
+  @media (min-width: 600px) {
+    .hologram { padding: 40px 36px; }
+    .header { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+    .invoice-title { text-align: right; }
+    .parties { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .footer { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .brand-name { font-size: 32px; }
+    .invoice-title h1 { font-size: 46px; }
+    .meta-row { justify-content: flex-end; }
+    .meta-item { text-align: right; flex: none; }
+    .restaurant-icon { width: 52px; height: 52px; }
+    .dont-panic { font-size: 80px; }
   }
 
-  .toolbar button.primary-action {
-    color: var(--holo);
-    border: 1px solid rgba(0,229,255,0.2);
+  @media (min-width: 860px) {
+    .hologram { padding: 52px 58px; }
+    .holo-scene { padding: 80px 20px 180px; }
+    .brand-name { font-size: 34px; }
+    .invoice-title h1 { font-size: 52px; }
+    .party-name { font-size: 26px; }
+    .proton-assembly { width: 240px; height: 240px; }
+    .proton-core { width: 52px; height: 52px; }
+    .orbit-ring { width: 170px; height: 170px; margin-top: -85px; margin-left: -85px; }
+    .orbit-2 { width: 160px; height: 160px; margin-top: -80px; margin-left: -80px; }
+    .proton-label { font-size: 24px; margin-top: 60px; }
+    .restaurant-icon { width: 56px; height: 56px; }
+    .dont-panic { font-size: 100px; }
+    .toolbar {
+      bottom: 24px; left: 50%; right: auto;
+      transform: translateX(-50%) translateY(20px);
+      border-top: none; border: 1px solid rgba(0,229,255,0.1);
+      flex-wrap: nowrap; padding-bottom: 4px;
+    }
+    .toolbar.visible { transform: translateX(-50%) translateY(0); }
   }
-
-  .toolbar button.primary-action:hover {
-    background: rgba(0,229,255,0.1);
-    border-color: var(--holo);
-    box-shadow: 0 0 12px rgba(0,229,255,0.15);
-  }
-
-  .toolbar .sep { width: 1px; background: rgba(0,229,255,0.08); margin: 4px 2px; }
 
   /* ─── PRINT ──────────────────────────────── */
   @media print {
-    body { background: #fff; color: #111; cursor: auto; }
+    body { background: #fff; color: #111; }
     .space, .toolbar, .add-row, #particleCanvas, #burstCanvas,
     .scan-bar, .chroma-edge, .glitch-layer, .emitter,
-    .beam, .hud-label, .proton-intro { display: none !important; }
-    .invoice-container { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
-    .holo-scene { perspective: none; padding: 0; min-height: auto; }
-    .holo-wrap { animation: none !important; transform: none !important; }
-    .hologram {
-      background: #fff; border: 1px solid #ddd;
-      box-shadow: none; padding: 32px;
-      animation: none !important; backdrop-filter: none;
-    }
-    .hologram::before, .hologram::after { display: none; }
-    .corner { display: none; }
-    .brand-name, .party-name, .invoice-title h1 {
-      color: #111 !important; text-shadow: none !important;
-    }
-    [contenteditable] { color: #222 !important; border-bottom-color: transparent; text-shadow: none; }
-    .meta-label, .party-label, .total-label, .footer-section-label,
-    .items-table thead th { color: #666 !important; }
-    .total-row:last-child .total-value { color: #111 !important; text-shadow: none !important; }
-    .status-badge { border-color: #666; color: #666; }
-    .status-dot { animation: none; }
+    .beam, .hud-label, .dont-panic, .proton-intro { display: none !important; }
+    .invoice-container { opacity:1!important; transform:none!important; pointer-events:auto!important; }
+    .holo-scene { perspective:none; padding:0; min-height:auto; }
+    .holo-wrap { animation:none!important; transform:none!important; }
+    .hologram { background:#fff; border:1px solid #ddd; box-shadow:none; padding:24px; animation:none!important; }
+    .hologram::before, .hologram::after { display:none; }
+    .corner { display:none; }
+    .restaurant-icon svg { filter: none; animation: none; }
+    .restaurant-icon svg .icon-stroke { stroke: #333; }
+    .restaurant-icon svg .icon-fill { fill: #333; opacity: 0.08; }
+    .restaurant-icon svg .icon-dot { fill: #333; }
+    .restaurant-icon .forty-two { display: none; }
+    .brand-name, .party-name, .invoice-title h1 { color:#111!important; text-shadow:none!important; }
+    [contenteditable] { color:#222!important; border-bottom-color:transparent; }
+    .meta-label, .party-label, .total-label, .footer-section-label, .items-table thead th { color:#666!important; }
+    .total-row:last-child .total-value { color:#111!important; text-shadow:none!important; }
+    .status-badge { border-color:#666; color:#666; }
   }
 </style>
 </head>
@@ -1049,40 +612,25 @@
 <canvas id="burstCanvas"></canvas>
 <canvas id="particleCanvas"></canvas>
 
-<!-- ═══════════════════════════════════════════
-     PROTON INTRO
-     ═══════════════════════════════════════════ -->
+<!-- ═══ PROTON INTRO ═══════════════════════════ -->
 <div class="proton-intro" id="protonIntro">
   <div class="proton-assembly">
-    <!-- Glow pings -->
     <div class="glow-ping"></div>
     <div class="glow-ping"></div>
     <div class="glow-ping"></div>
-
-    <!-- Orbital rings with electrons -->
     <div class="orbit-ring orbit-1"><div class="electron"></div></div>
     <div class="orbit-ring orbit-2"><div class="electron"></div></div>
-    <div class="orbit-ring orbit-3"><div class="electron"></div></div>
-
-    <!-- Nucleus -->
     <div class="proton-core"></div>
-
-    <!-- Quarks -->
     <div class="quark quark-r"></div>
     <div class="quark quark-g"></div>
     <div class="quark quark-b"></div>
   </div>
-
   <div class="proton-label">open your invoice</div>
-
-  <!-- Burst effects -->
   <div class="shockwave" id="shockwave"></div>
   <div class="screen-flash" id="screenFlash"></div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     INVOICE CONTAINER (hidden until proton burst)
-     ═══════════════════════════════════════════ -->
+<!-- ═══ INVOICE ═════════════════════════════════ -->
 <div class="invoice-container" id="invoiceContainer">
   <div class="holo-scene">
     <div class="holo-wrap" id="holoWrap">
@@ -1094,17 +642,46 @@
         <div class="corner corner-tr"></div>
         <div class="corner corner-bl"></div>
         <div class="corner corner-br"></div>
+        <div class="dont-panic">Don't Panic</div>
 
-        <!-- HUD readouts -->
         <div class="hud-label hud-tl">Invoice<br><span class="val" id="hudTime">00:00:00</span></div>
         <div class="hud-label hud-tr">HeartmindSpaces<br><span class="val">v3.2.1</span></div>
         <div class="hud-label hud-bl">Projection<br><span class="val">Active</span></div>
         <div class="hud-label hud-br">Signal<br><span class="val" id="hudSignal">98.7%</span></div>
 
-        <!-- ─── HEADER ───────────────────────────── -->
         <div class="header">
           <div class="brand">
-            <div class="brand-icon"></div>
+            <div class="restaurant-icon" title="The Restaurant at the End of the Universe">
+              <span class="forty-two">42</span>
+              <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="28" cy="30" rx="24" ry="10" class="icon-fill"/>
+                <ellipse cx="28" cy="30" rx="24" ry="10" class="icon-stroke"/>
+                <ellipse cx="28" cy="30" rx="15" ry="6" class="icon-stroke" style="stroke-dasharray: 2 3; opacity: 0.4;"/>
+                <line x1="18" y1="8" x2="18" y2="26" class="icon-stroke"/>
+                <line x1="15" y1="8" x2="15" y2="14" class="icon-stroke" style="stroke-width:1;"/>
+                <line x1="18" y1="8" x2="18" y2="14" class="icon-stroke" style="stroke-width:1;"/>
+                <line x1="21" y1="8" x2="21" y2="14" class="icon-stroke" style="stroke-width:1;"/>
+                <path d="M15 14 Q18 17 21 14" class="icon-stroke" style="fill:none; stroke-width:1;"/>
+                <line x1="38" y1="8" x2="38" y2="26" class="icon-stroke"/>
+                <path d="M38 8 Q42 12 38 18" class="icon-stroke" style="fill:none; stroke-width:1;"/>
+                <circle cx="8" cy="12" r="1" class="icon-dot"/>
+                <circle cx="48" cy="8" r="1.2" class="icon-dot"/>
+                <circle cx="50" cy="20" r="0.7" class="icon-dot"/>
+                <circle cx="6" cy="24" r="0.8" class="icon-dot"/>
+                <circle cx="28" cy="4" r="0.9" class="icon-dot"/>
+                <circle cx="44" cy="42" r="0.6" class="icon-dot"/>
+                <circle cx="12" cy="40" r="0.7" class="icon-dot"/>
+                <path d="M25 29 Q28 27 31 29 Q29 31 26 30" class="icon-stroke" style="stroke-width:0.8; opacity:0.5;"/>
+                <circle cx="28" cy="30" r="1.5" class="icon-dot" style="opacity:0.6;"/>
+                <line x1="28" y1="27" x2="28" y2="25.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
+                <line x1="30.5" y1="28.5" x2="32" y2="27.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
+                <line x1="25.5" y1="28.5" x2="24" y2="27.5" class="icon-stroke" style="stroke-width:0.6; opacity:0.4;"/>
+                <line x1="30" y1="31.5" x2="31.5" y2="33" class="icon-stroke" style="stroke-width:0.6; opacity:0.3;"/>
+                <line x1="26" y1="31.5" x2="24.5" y2="33" class="icon-stroke" style="stroke-width:0.6; opacity:0.3;"/>
+                <path id="arcPath" d="M10 44 Q28 52 46 44" fill="none" stroke="none"/>
+                <text class="icon-text"><textPath href="#arcPath" startOffset="50%" text-anchor="middle">End of Universe Dining</textPath></text>
+              </svg>
+            </div>
             <div class="brand-name">HeartmindSpaces</div>
           </div>
           <div class="invoice-title">
@@ -1116,23 +693,12 @@
           </div>
         </div>
 
-        <!-- ─── META ─────────────────────────────── -->
         <div class="meta-row">
-          <div class="meta-item">
-            <div class="meta-label">Invoice No.</div>
-            <div class="meta-value"><span contenteditable="true" data-placeholder="HMS-0001">HMS-0001</span></div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Issue Date</div>
-            <div class="meta-value"><span contenteditable="true" data-placeholder="2026-02-23">2026-02-23</span></div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Due Date</div>
-            <div class="meta-value"><span contenteditable="true" data-placeholder="2026-03-23">2026-03-23</span></div>
-          </div>
+          <div class="meta-item"><div class="meta-label">Invoice No.</div><div class="meta-value"><span contenteditable="true" data-placeholder="HMS-0001">HMS-0001</span></div></div>
+          <div class="meta-item"><div class="meta-label">Issue Date</div><div class="meta-value"><span contenteditable="true" data-placeholder="2026-02-23">2026-02-23</span></div></div>
+          <div class="meta-item"><div class="meta-label">Due Date</div><div class="meta-value"><span contenteditable="true" data-placeholder="2026-03-23">2026-03-23</span></div></div>
         </div>
 
-        <!-- ─── PARTIES ──────────────────────────── -->
         <div class="parties">
           <div class="party-from">
             <div class="party-label">From</div>
@@ -1158,92 +724,40 @@
           </div>
         </div>
 
-        <!-- ─── LINE ITEMS ───────────────────────── -->
         <div class="line-items">
           <table class="items-table">
-            <thead>
-              <tr>
-                <th style="width:50%">Description</th>
-                <th style="width:12%">Qty</th>
-                <th style="width:18%">Rate</th>
-                <th style="width:20%">Amount</th>
-              </tr>
-            </thead>
+            <thead><tr>
+              <th style="width:46%">Description</th>
+              <th style="width:12%">Qty</th>
+              <th style="width:20%">Rate</th>
+              <th style="width:22%">Amount</th>
+            </tr></thead>
             <tbody id="itemsBody">
-              <tr>
-                <td>
-                  <div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div>
-                  <div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div>
-                </td>
-                <td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td>
-                <td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td>
-                <td class="line-total">$0.00</td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div>
-                  <div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div>
-                </td>
-                <td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td>
-                <td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td>
-                <td class="line-total">$0.00</td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div>
-                  <div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div>
-                </td>
-                <td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td>
-                <td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td>
-                <td class="line-total">$0.00</td>
-              </tr>
+              <tr><td><div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div><div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div></td><td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td><td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td><td class="line-total">$0.00</td></tr>
+              <tr><td><div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div><div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div></td><td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td><td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td><td class="line-total">$0.00</td></tr>
+              <tr><td><div class="item-desc"><span contenteditable="true" data-placeholder="Service or product name"></span></div><div class="item-subdesc"><span contenteditable="true" data-placeholder="Additional details..."></span></div></td><td><span contenteditable="true" class="qty" data-placeholder="0">1</span></td><td><span contenteditable="true" class="rate" data-placeholder="0.00">0.00</span></td><td class="line-total">$0.00</td></tr>
             </tbody>
           </table>
           <button class="add-row" id="addRowBtn"><span>+</span> Add Line Item</button>
         </div>
 
-        <!-- ─── TOTALS ───────────────────────────── -->
         <div class="totals-section">
           <div class="totals">
-            <div class="total-row">
-              <span class="total-label">Subtotal</span>
-              <span class="total-value" id="subtotal">$0.00</span>
-            </div>
-            <div class="total-row">
-              <span class="total-label">Tax (<span contenteditable="true" id="taxRate">0</span>%)</span>
-              <span class="total-value" id="taxAmount">$0.00</span>
-            </div>
-            <div class="total-row">
-              <span class="total-label">Discount</span>
-              <span class="total-value">-$<span contenteditable="true" id="discount">0.00</span></span>
-            </div>
-            <div class="total-row">
-              <span class="total-label">Total Due</span>
-              <span class="total-value" id="totalDue">$0.00</span>
-            </div>
+            <div class="total-row"><span class="total-label">Subtotal</span><span class="total-value" id="subtotal">$0.00</span></div>
+            <div class="total-row"><span class="total-label">Tax (<span contenteditable="true" id="taxRate">0</span>%)</span><span class="total-value" id="taxAmount">$0.00</span></div>
+            <div class="total-row"><span class="total-label">Discount</span><span class="total-value">-$<span contenteditable="true" id="discount">0.00</span></span></div>
+            <div class="total-row"><span class="total-label">Total Due</span><span class="total-value" id="totalDue">$0.00</span></div>
           </div>
         </div>
 
-        <!-- ─── FOOTER ───────────────────────────── -->
         <div class="footer">
-          <div>
-            <div class="footer-section-label">Payment Details</div>
-            <div class="footer-content">
-              <span contenteditable="true" data-placeholder="Bank / Payment method details...">Bank: First National | Routing: 000000000 | Account: 000000000</span>
-            </div>
-          </div>
-          <div>
-            <div class="footer-section-label">Notes &amp; Terms</div>
-            <div class="footer-content">
-              <span contenteditable="true" data-placeholder="Payment terms, thank you note...">Payment due within 30 days of issue date. Late payments may incur a 1.5% monthly fee. Thank you for your trust in HeartmindSpaces.</span>
-            </div>
-          </div>
+          <div><div class="footer-section-label">Payment Details</div><div class="footer-content"><span contenteditable="true" data-placeholder="Bank / Payment method details...">Bank: First National | Routing: 000000000 | Account: 000000000</span></div></div>
+          <div><div class="footer-section-label">Notes &amp; Terms</div><div class="footer-content"><span contenteditable="true" data-placeholder="Payment terms, thank you note...">Payment due within 30 days of issue date. Late payments may incur a 1.5% monthly fee. Thank you for your trust in HeartmindSpaces.</span></div></div>
         </div>
 
       </div>
     </div>
 
-    <!-- ─── EMITTER ────────────────────────────── -->
     <div class="emitter">
       <div class="beam"></div>
       <div class="emitter-body"></div>
@@ -1255,91 +769,66 @@
   </div>
 </div>
 
-<!-- ─── TOOLBAR ──────────────────────────────── -->
 <div class="toolbar" id="toolbar">
-  <button id="downloadPdfBtn" class="primary-action">Download PDF</button>
+  <button id="downloadPdfBtn" class="primary-action">PDF</button>
   <div class="sep"></div>
-  <button id="saveHtmlBtn">Save HTML</button>
+  <button id="saveHtmlBtn">HTML</button>
   <div class="sep"></div>
   <button id="printBtn">Print</button>
   <div class="sep"></div>
   <button id="addRowBtn2">+ Row</button>
   <div class="sep"></div>
-  <button id="recalcBtn">Recalc</button>
+  <button id="recalcBtn">Calc</button>
   <div class="sep"></div>
   <button id="resetBtn">Reset</button>
 </div>
 
 <script>
-  // ═══════════════════════════════════════════
-  // AMBIENT PARTICLE SYSTEM
-  // ═══════════════════════════════════════════
+  var isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  // ═══ AMBIENT PARTICLES ═══
   (function() {
     var canvas = document.getElementById('particleCanvas');
     var ctx = canvas.getContext('2d');
     var particles = [];
-    var count = 60;
+    var count = isMobile ? 30 : 60;
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     resize();
     window.addEventListener('resize', resize);
 
-    function Particle() { this.reset(); }
-
-    Particle.prototype.reset = function() {
+    function P() { this.reset(); }
+    P.prototype.reset = function() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 1.5 + 0.3;
-      this.speedX = (Math.random() - 0.5) * 0.3;
-      this.speedY = (Math.random() - 0.5) * 0.2 - 0.1;
-      this.opacity = Math.random() * 0.4 + 0.1;
+      this.size = Math.random() * 1.2 + 0.3;
+      this.speedX = (Math.random() - 0.5) * 0.25;
+      this.speedY = (Math.random() - 0.5) * 0.15 - 0.08;
+      this.opacity = Math.random() * 0.35 + 0.1;
       this.pulse = Math.random() * Math.PI * 2;
-      this.pulseSpeed = Math.random() * 0.02 + 0.005;
+      this.pulseSpeed = Math.random() * 0.015 + 0.005;
     };
-
-    Particle.prototype.update = function() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      this.pulse += this.pulseSpeed;
-      if (this.x < -10 || this.x > canvas.width + 10 ||
-          this.y < -10 || this.y > canvas.height + 10) {
-        this.reset();
-      }
+    P.prototype.update = function() {
+      this.x += this.speedX; this.y += this.speedY; this.pulse += this.pulseSpeed;
+      if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) this.reset();
     };
-
-    Particle.prototype.draw = function() {
+    P.prototype.draw = function() {
       var o = this.opacity * (0.5 + 0.5 * Math.sin(this.pulse));
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(0, 229, 255, ' + o + ')';
-      ctx.fill();
-      if (this.size > 1) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 229, 255, ' + (o * 0.15) + ')';
-        ctx.fill();
-      }
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,229,255,' + o + ')'; ctx.fill();
     };
 
-    for (var i = 0; i < count; i++) particles.push(new Particle());
+    for (var i = 0; i < count; i++) particles.push(new P());
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (var i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-      }
+      for (var i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); }
       requestAnimationFrame(animate);
     }
     animate();
   })();
 
-  // ═══════════════════════════════════════════
-  // BURST PARTICLE SYSTEM
-  // ═══════════════════════════════════════════
+  // ═══ BURST PARTICLES ═══
   function triggerBurst(cx, cy) {
     var canvas = document.getElementById('burstCanvas');
     var ctx = canvas.getContext('2d');
@@ -1348,7 +837,7 @@
     canvas.style.display = 'block';
 
     var particles = [];
-    var count = 200;
+    var count = isMobile ? 100 : 200;
 
     for (var i = 0; i < count; i++) {
       var angle = Math.random() * Math.PI * 2;
@@ -1356,8 +845,7 @@
       var size = Math.random() * 3 + 0.5;
       var isEmber = Math.random() > 0.85;
       particles.push({
-        x: cx,
-        y: cy,
+        x: cx, y: cy,
         vx: Math.cos(angle) * speed * (isEmber ? 0.6 : 1),
         vy: Math.sin(angle) * speed * (isEmber ? 0.6 : 1),
         size: isEmber ? size * 2.5 : size,
@@ -1367,20 +855,14 @@
       });
     }
 
-    // Add radial streaks — fast bolts that clearly exit the viewport
-    for (var j = 0; j < 36; j++) {
-      var a = (j / 36) * Math.PI * 2;
+    var streakCount = isMobile ? 20 : 36;
+    for (var j = 0; j < streakCount; j++) {
+      var a = (j / streakCount) * Math.PI * 2;
       particles.push({
-        x: cx,
-        y: cy,
-        vx: Math.cos(a) * 34,
-        vy: Math.sin(a) * 34,
-        size: 1.8,
-        life: 1,
-        decay: 0.01,
-        hue: 185,
-        isStreak: true,
-        trail: []
+        x: cx, y: cy,
+        vx: Math.cos(a) * 34, vy: Math.sin(a) * 34,
+        size: 1.8, life: 1, decay: 0.01,
+        hue: 185, isStreak: true, trail: []
       });
     }
 
@@ -1392,11 +874,8 @@
         var p = particles[i];
         if (p.life <= 0) continue;
         alive = true;
-
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.993;
-        p.vy *= 0.993;
+        p.x += p.vx; p.y += p.vy;
+        p.vx *= 0.993; p.vy *= 0.993;
         p.life -= p.decay;
 
         if (p.isStreak) {
@@ -1405,37 +884,24 @@
           for (var t = 0; t < p.trail.length; t++) {
             var tp = p.trail[t];
             var to = tp.life * (t / p.trail.length) * 0.6;
-            ctx.beginPath();
-            ctx.arc(tp.x, tp.y, 1, 0, Math.PI * 2);
-            ctx.fillStyle = 'hsla(' + p.hue + ', 100%, 75%, ' + to + ')';
-            ctx.fill();
+            ctx.beginPath(); ctx.arc(tp.x, tp.y, 1, 0, Math.PI * 2);
+            ctx.fillStyle = 'hsla(' + p.hue + ',100%,75%,' + to + ')'; ctx.fill();
           }
         }
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-        ctx.fillStyle = 'hsla(' + p.hue + ', 100%, 72%, ' + p.life + ')';
-        ctx.fill();
-
-        // Glow halo
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * p.life * 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = 'hsla(' + p.hue + ', 100%, 72%, ' + (p.life * 0.12) + ')';
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+        ctx.fillStyle = 'hsla(' + p.hue + ',100%,72%,' + p.life + ')'; ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size * p.life * 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'hsla(' + p.hue + ',100%,72%,' + (p.life * 0.1) + ')'; ctx.fill();
       }
 
-      if (alive) {
-        requestAnimationFrame(animate);
-      } else {
-        canvas.style.display = 'none';
-      }
+      if (alive) requestAnimationFrame(animate);
+      else canvas.style.display = 'none';
     }
     animate();
   }
 
-  // ═══════════════════════════════════════════
-  // PROTON CLICK → TRANSITION SEQUENCE
-  // ═══════════════════════════════════════════
+  // ═══ PROTON CLICK → TRANSITION ═══
   (function() {
     var intro = document.getElementById('protonIntro');
     var core = document.querySelector('.proton-core');
@@ -1454,65 +920,39 @@
       triggered = true;
       intro.style.cursor = 'default';
 
-      // ── PHASE 1: Energize (0–300ms) ──
       core.style.animation = 'none';
       core.style.transform = 'scale(1.5)';
-      core.style.boxShadow = '0 0 50px rgba(0,229,255,1), 0 0 100px rgba(0,229,255,0.7), 0 0 180px rgba(0,229,255,0.4)';
-
+      core.style.boxShadow = '0 0 50px rgba(0,229,255,1),0 0 100px rgba(0,229,255,0.7),0 0 180px rgba(0,229,255,0.4)';
       orbits.forEach(function(o) { o.style.animationDuration = '0.4s'; });
       pings.forEach(function(p) { p.style.animationDuration = '0.5s'; });
 
-      // ── PHASE 2: Supernova (300ms) ──
       setTimeout(function() {
-        core.style.transition = 'transform 0.2s ease-in, background 0.15s ease, box-shadow 0.2s ease';
+        core.style.transition = 'transform 0.2s ease-in,background 0.15s ease,box-shadow 0.2s ease';
         core.style.transform = 'scale(4)';
-        core.style.background = 'radial-gradient(circle, #ffffff 0%, #d0f8ff 30%, #00e5ff 60%, transparent 100%)';
-        core.style.boxShadow = '0 0 80px #fff, 0 0 160px rgba(0,229,255,1), 0 0 280px rgba(0,229,255,0.5)';
-
-        quarks.forEach(function(q) {
-          q.style.transition = 'opacity 0.15s ease';
-          q.style.opacity = '0';
-        });
+        core.style.background = 'radial-gradient(circle,#fff 0%,#d0f8ff 30%,#00e5ff 60%,transparent 100%)';
+        core.style.boxShadow = '0 0 80px #fff,0 0 160px rgba(0,229,255,1),0 0 280px rgba(0,229,255,0.5)';
+        quarks.forEach(function(q) { q.style.transition = 'opacity 0.15s'; q.style.opacity = '0'; });
       }, 300);
 
-      // ── PHASE 3: Burst (500ms) ──
       setTimeout(function() {
         var rect = core.getBoundingClientRect();
-        var cx = rect.left + rect.width / 2;
-        var cy = rect.top + rect.height / 2;
-        triggerBurst(cx, cy);
-
+        triggerBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
         shockwave.classList.add('active');
         flash.classList.add('active');
-
-        // Collapse the core
-        core.style.transition = 'transform 0.5s ease-out, opacity 0.4s ease-out';
-        core.style.transform = 'scale(0)';
-        core.style.opacity = '0';
-
-        orbits.forEach(function(o) {
-          o.style.transition = 'opacity 0.35s ease';
-          o.style.opacity = '0';
-        });
-
-        pings.forEach(function(p) {
-          p.style.transition = 'opacity 0.25s ease';
-          p.style.opacity = '0';
-        });
-
-        label.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-        label.style.opacity = '0';
-        label.style.transform = 'translateY(-15px)';
+        core.style.transition = 'transform 0.5s ease-out,opacity 0.4s ease-out';
+        core.style.transform = 'scale(0)'; core.style.opacity = '0';
+        orbits.forEach(function(o) { o.style.transition = 'opacity 0.35s'; o.style.opacity = '0'; });
+        pings.forEach(function(p) { p.style.transition = 'opacity 0.25s'; p.style.opacity = '0'; });
+        label.style.transition = 'opacity 0.4s,transform 0.4s';
+        label.style.opacity = '0'; label.style.transform = 'translateY(-15px)';
       }, 500);
 
-      // ── PHASE 4: Invoice materializes (1000ms) ──
       setTimeout(function() {
         invoice.classList.add('revealed');
         intro.classList.add('gone');
         document.body.style.cursor = 'crosshair';
       }, 1000);
 
-      // ── PHASE 5: Toolbar appears, cleanup (2000ms) ──
       setTimeout(function() {
         toolbar.classList.add('visible');
         intro.style.display = 'none';
@@ -1520,141 +960,94 @@
     });
   })();
 
-  // ═══════════════════════════════════════════
-  // HUD CLOCK
-  // ═══════════════════════════════════════════
+  // ═══ HUD CLOCK ═══
   (function() {
     var hudTime = document.getElementById('hudTime');
     var hudSignal = document.getElementById('hudSignal');
     function tick() {
       var d = new Date();
-      var h = String(d.getHours()).padStart(2, '0');
-      var m = String(d.getMinutes()).padStart(2, '0');
-      var s = String(d.getSeconds()).padStart(2, '0');
-      hudTime.textContent = h + ':' + m + ':' + s;
+      hudTime.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');
       hudSignal.textContent = (97 + Math.random() * 2.8).toFixed(1) + '%';
     }
-    tick();
-    setInterval(tick, 1000);
+    tick(); setInterval(tick, 1000);
   })();
 
-  // ═══════════════════════════════════════════
-  // 3D MOUSE TRACKING
-  // ═══════════════════════════════════════════
+  // ═══ 3D MOUSE TRACKING (desktop only) ═══
   var wrap = document.getElementById('holoWrap');
   var isEditing = false;
-  var maxTilt = 5;
 
-  document.addEventListener('focusin', function(e) {
-    if (e.target.getAttribute('contenteditable')) {
-      isEditing = true;
+  if (!isMobile) {
+    document.addEventListener('focusin', function(e) {
+      if (e.target.getAttribute('contenteditable')) { isEditing = true; wrap.style.animation = 'none'; wrap.style.transform = 'rotateX(0) rotateY(0)'; }
+    });
+    document.addEventListener('focusout', function(e) {
+      if (e.target.getAttribute('contenteditable')) { isEditing = false; wrap.style.animation = ''; }
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (isEditing) return;
+      var mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      var my = (e.clientY / window.innerHeight - 0.5) * 2;
       wrap.style.animation = 'none';
-      wrap.style.transform = 'rotateX(0) rotateY(0) translateY(0)';
-    }
-  });
+      wrap.style.transform = 'translateY(-6px) rotateX(' + (2 - my * 2.5) + 'deg) rotateY(' + (mx * 5) + 'deg)';
+    });
+    document.addEventListener('mouseleave', function() {
+      if (!isEditing) { wrap.style.animation = ''; wrap.style.transform = ''; }
+    });
+  }
 
-  document.addEventListener('focusout', function(e) {
-    if (e.target.getAttribute('contenteditable')) {
-      isEditing = false;
-      wrap.style.animation = '';
-    }
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isEditing) return;
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    var mx = (e.clientX / w - 0.5) * 2;
-    var my = (e.clientY / h - 0.5) * 2;
-    var rotY = mx * maxTilt;
-    var rotX = -my * maxTilt * 0.5;
-    wrap.style.animation = 'none';
-    wrap.style.transform =
-      'translateY(-6px) rotateX(' + (2 + rotX) + 'deg) rotateY(' + rotY + 'deg)';
-  });
-
-  document.addEventListener('mouseleave', function() {
-    if (!isEditing) {
-      wrap.style.animation = '';
-      wrap.style.transform = '';
-    }
-  });
-
-  // ═══════════════════════════════════════════
-  // SAFE DOM ROW BUILDER
-  // ═══════════════════════════════════════════
-  function createEditableSpan(className, placeholder, defaultText) {
-    var span = document.createElement('span');
-    span.setAttribute('contenteditable', 'true');
-    span.setAttribute('data-placeholder', placeholder);
-    if (className) span.className = className;
-    if (defaultText) span.textContent = defaultText;
-    return span;
+  // ═══ ROW BUILDER ═══
+  function createEditableSpan(cls, ph, txt) {
+    var s = document.createElement('span');
+    s.setAttribute('contenteditable', 'true');
+    s.setAttribute('data-placeholder', ph);
+    if (cls) s.className = cls;
+    if (txt) s.textContent = txt;
+    return s;
   }
 
   function createLineItemRow() {
     var tr = document.createElement('tr');
-    var tdDesc = document.createElement('td');
-    var divDesc = document.createElement('div');
-    divDesc.className = 'item-desc';
-    divDesc.appendChild(createEditableSpan('', 'Service or product name', ''));
-    var divSub = document.createElement('div');
-    divSub.className = 'item-subdesc';
-    divSub.appendChild(createEditableSpan('', 'Additional details...', ''));
-    tdDesc.appendChild(divDesc);
-    tdDesc.appendChild(divSub);
-    var tdQty = document.createElement('td');
-    tdQty.appendChild(createEditableSpan('qty', '0', '1'));
-    var tdRate = document.createElement('td');
-    tdRate.appendChild(createEditableSpan('rate', '0.00', '0.00'));
-    var tdAmount = document.createElement('td');
-    tdAmount.className = 'line-total';
-    tdAmount.textContent = '$0.00';
-    tr.appendChild(tdDesc);
-    tr.appendChild(tdQty);
-    tr.appendChild(tdRate);
-    tr.appendChild(tdAmount);
+    var td1 = document.createElement('td');
+    var d1 = document.createElement('div'); d1.className = 'item-desc';
+    d1.appendChild(createEditableSpan('', 'Service or product name', ''));
+    var d2 = document.createElement('div'); d2.className = 'item-subdesc';
+    d2.appendChild(createEditableSpan('', 'Additional details...', ''));
+    td1.appendChild(d1); td1.appendChild(d2);
+    var td2 = document.createElement('td'); td2.appendChild(createEditableSpan('qty', '0', '1'));
+    var td3 = document.createElement('td'); td3.appendChild(createEditableSpan('rate', '0.00', '0.00'));
+    var td4 = document.createElement('td'); td4.className = 'line-total'; td4.textContent = '$0.00';
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
     return tr;
   }
 
-  // ═══════════════════════════════════════════
-  // AUTO-CALCULATE
-  // ═══════════════════════════════════════════
+  // ═══ AUTO-CALCULATE ═══
   function recalc() {
     var rows = document.querySelectorAll('#itemsBody tr');
     var subtotal = 0;
-    rows.forEach(function(row) {
-      var qtyEl = row.querySelector('.qty');
-      var rateEl = row.querySelector('.rate');
-      var totalEl = row.querySelector('.line-total');
-      var qty = parseFloat(qtyEl ? qtyEl.textContent : '0') || 0;
-      var rate = parseFloat(rateEl ? rateEl.textContent : '0') || 0;
-      var lineTotal = qty * rate;
-      subtotal += lineTotal;
-      if (totalEl) totalEl.textContent = '$' + lineTotal.toFixed(2);
+    rows.forEach(function(r) {
+      var q = parseFloat((r.querySelector('.qty') || {}).textContent) || 0;
+      var rt = parseFloat((r.querySelector('.rate') || {}).textContent) || 0;
+      var lt = q * rt; subtotal += lt;
+      var c = r.querySelector('.line-total'); if (c) c.textContent = '$' + lt.toFixed(2);
     });
-    var taxRate = parseFloat(document.getElementById('taxRate').textContent) || 0;
-    var discountVal = parseFloat(document.getElementById('discount').textContent) || 0;
-    var tax = subtotal * (taxRate / 100);
-    var total = subtotal + tax - discountVal;
+    var tr = parseFloat(document.getElementById('taxRate').textContent) || 0;
+    var dv = parseFloat(document.getElementById('discount').textContent) || 0;
+    var tax = subtotal * (tr / 100);
     document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
     document.getElementById('taxAmount').textContent = '$' + tax.toFixed(2);
-    document.getElementById('totalDue').textContent = '$' + total.toFixed(2);
+    document.getElementById('totalDue').textContent = '$' + (subtotal + tax - dv).toFixed(2);
   }
 
   function addRow() {
     var tbody = document.getElementById('itemsBody');
-    var newRow = createLineItemRow();
-    tbody.appendChild(newRow);
-    attachListeners(newRow);
-    newRow.querySelector('.item-desc [contenteditable]').focus();
+    var nr = createLineItemRow(); tbody.appendChild(nr);
+    attachListeners(nr);
+    nr.querySelector('.item-desc [contenteditable]').focus();
   }
 
   function resetInvoice() {
-    if (confirm('Reset all fields? This cannot be undone.')) {
-      document.querySelectorAll('[contenteditable]').forEach(function(el) {
-        if (!el.id) el.textContent = '';
-      });
+    if (confirm('Reset all fields?')) {
+      document.querySelectorAll('[contenteditable]').forEach(function(el) { if (!el.id) el.textContent = ''; });
       document.getElementById('taxRate').textContent = '0';
       document.getElementById('discount').textContent = '0.00';
       recalc();
@@ -1662,10 +1055,8 @@
   }
 
   function attachListeners(scope) {
-    var target = scope || document;
-    target.querySelectorAll('.qty, .rate').forEach(function(el) {
-      el.addEventListener('input', recalc);
-      el.addEventListener('blur', recalc);
+    (scope || document).querySelectorAll('.qty, .rate').forEach(function(el) {
+      el.addEventListener('input', recalc); el.addEventListener('blur', recalc);
     });
   }
 
@@ -1673,109 +1064,50 @@
   document.getElementById('discount').addEventListener('input', recalc);
   attachListeners();
 
-  // ═══════════════════════════════════════════
-  // STATUS BADGE
-  // ═══════════════════════════════════════════
   document.getElementById('statusBadge').addEventListener('click', function() {
     this.classList.toggle('paid');
-    var textEl = this.querySelector('.status-text');
-    textEl.textContent = this.classList.contains('paid') ? 'Paid' : 'Pending';
+    this.querySelector('.status-text').textContent = this.classList.contains('paid') ? 'Paid' : 'Pending';
   });
 
-  // ═══════════════════════════════════════════
-  // PDF DOWNLOAD
-  // ═══════════════════════════════════════════
+  // ═══ PDF DOWNLOAD ═══
   function downloadPdf() {
     recalc();
     var card = document.getElementById('holoCard');
-    var invoiceNo = document.querySelector('.meta-value [contenteditable]').textContent || 'HMS-0001';
-    var filename = 'HeartmindSpaces-' + invoiceNo + '.pdf';
-
-    wrap.style.animation = 'none';
-    wrap.style.transform = 'none';
-    var addBtns = document.querySelectorAll('.add-row');
-    var scanBar = document.querySelector('.scan-bar');
-    var chromaEdge = document.querySelector('.chroma-edge');
-    var glitchLayer = document.querySelector('.glitch-layer');
-    var corners = document.querySelectorAll('.corner');
-    var hudLabels = document.querySelectorAll('.hud-label');
-
-    addBtns.forEach(function(b) { b.style.display = 'none'; });
-    if (scanBar) scanBar.style.display = 'none';
-    if (chromaEdge) chromaEdge.style.display = 'none';
-    if (glitchLayer) glitchLayer.style.display = 'none';
-    corners.forEach(function(c) { c.style.display = 'none'; });
-    hudLabels.forEach(function(h) { h.style.display = 'none'; });
-
-    card.style.animation = 'none';
-    card.style.background = '#0a1a2a';
-    card.style.border = '1px solid #1a3a5a';
-
-    var opt = {
-      margin:       [0.3, 0.3, 0.3, 0.3],
-      filename:     filename,
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#0a1a2a' },
-      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(card).save().then(function() {
-      addBtns.forEach(function(b) { b.style.display = 'flex'; });
-      if (scanBar) scanBar.style.display = '';
-      if (chromaEdge) chromaEdge.style.display = '';
-      if (glitchLayer) glitchLayer.style.display = '';
-      corners.forEach(function(c) { c.style.display = ''; });
-      hudLabels.forEach(function(h) { h.style.display = ''; });
-      card.style.animation = '';
-      card.style.background = '';
-      card.style.border = '';
-      wrap.style.animation = '';
-      wrap.style.transform = '';
+    var fn = 'HeartmindSpaces-' + (document.querySelector('.meta-value [contenteditable]').textContent || 'HMS-0001') + '.pdf';
+    wrap.style.animation = 'none'; wrap.style.transform = 'none';
+    var hide = ['.add-row', '.scan-bar', '.chroma-edge', '.glitch-layer', '.corner', '.hud-label', '.dont-panic'];
+    hide.forEach(function(s) { document.querySelectorAll(s).forEach(function(e) { e.style.display = 'none'; }); });
+    card.style.animation = 'none'; card.style.background = '#0a1a2a'; card.style.border = '1px solid #1a3a5a';
+    html2pdf().set({
+      margin: [0.3,0.3,0.3,0.3], filename: fn,
+      image: {type:'jpeg',quality:0.98},
+      html2canvas: {scale:2,useCORS:true,backgroundColor:'#0a1a2a'},
+      jsPDF: {unit:'in',format:'a4',orientation:'portrait'}
+    }).from(card).save().then(function() {
+      hide.forEach(function(s) { document.querySelectorAll(s).forEach(function(e) { e.style.display = ''; }); });
+      card.style.animation = ''; card.style.background = ''; card.style.border = '';
+      wrap.style.animation = ''; wrap.style.transform = '';
     });
   }
 
-  // ═══════════════════════════════════════════
-  // SAVE AS HTML (view-only)
-  // ═══════════════════════════════════════════
+  // ═══ SAVE HTML (with proton transition) ═══
   function saveAsHtml() {
     recalc();
-    var invoiceNo = document.querySelector('.meta-value [contenteditable]').textContent || 'HMS-0001';
-    var filename = 'HeartmindSpaces-' + invoiceNo + '.html';
+    var fn = 'HeartmindSpaces-' + (document.querySelector('.meta-value [contenteditable]').textContent || 'HMS-0001') + '.html';
     var clone = document.documentElement.cloneNode(true);
-    var removeSelectors = ['.toolbar', '.add-row', 'script', '.proton-intro', '#burstCanvas'];
-    removeSelectors.forEach(function(sel) {
-      clone.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+    ['.toolbar','.add-row'].forEach(function(s) {
+      clone.querySelectorAll(s).forEach(function(e) { e.remove(); });
     });
-    clone.querySelectorAll('[contenteditable]').forEach(function(el) {
-      el.removeAttribute('contenteditable');
-      el.removeAttribute('data-placeholder');
-    });
-    // Force invoice visible in saved version
-    var container = clone.querySelector('.invoice-container');
-    if (container) {
-      container.style.opacity = '1';
-      container.style.transform = 'none';
-      container.style.pointerEvents = 'auto';
-    }
-    var bodyEl = clone.querySelector('body');
-    if (bodyEl) bodyEl.style.cursor = 'default';
-    var badge = clone.querySelector('.status-badge');
-    if (badge) badge.style.cursor = 'default';
-    var htmlContent = '<!DOCTYPE html>\n' + clone.outerHTML;
-    var blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    clone.querySelectorAll('[contenteditable]').forEach(function(e) { e.removeAttribute('contenteditable'); e.removeAttribute('data-placeholder'); });
+    var badge = clone.querySelector('.status-badge'); if (badge) badge.style.cursor = 'default';
+    var blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html;charset=utf-8' });
     var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    var a = document.createElement('a'); a.href = url; a.download = fn;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
 
-  // ═══════════════════════════════════════════
-  // TOOLBAR EVENTS
-  // ═══════════════════════════════════════════
+  // ═══ TOOLBAR ═══
   document.getElementById('downloadPdfBtn').addEventListener('click', downloadPdf);
   document.getElementById('saveHtmlBtn').addEventListener('click', saveAsHtml);
   document.getElementById('printBtn').addEventListener('click', function() { window.print(); });
